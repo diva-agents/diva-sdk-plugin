@@ -1,0 +1,16 @@
+{
+  "name": "diva-sdk",
+  "version": "0.1.0",
+  "description": "Build and manage AI agents on the Diva platform with the Diva SDK (Python & TypeScript) — ready-made skills, project scaffolds, and the Diva platform MCP wired in.",
+  "author": { "name": "Diva" },
+  "homepage": "https://front.dev.diva-ai.ru/ux/sdk-docs",
+  "keywords": ["diva", "sdk", "agents", "mcp", "ai-agents", "diva-ai"],
+  "defaultEnabled": false,
+  "userConfig": {
+    "diva_api_key": {
+      "type": "string",
+      "description": "Your Diva API key (sk-diva-…). Used as the bearer token for the Diva platform MCP and by the SDK. Get it from your Diva workspace → Developers → SDK.",
+      "sensitive": true
+    }
+  }
+}

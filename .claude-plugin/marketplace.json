@@ -1,0 +1,17 @@
+{
+  "$schema": "https://code.claude.com/schemas/marketplace.json",
+  "name": "diva",
+  "owner": {
+    "name": "Diva"
+  },
+  "plugins": [
+    {
+      "name": "diva-sdk",
+      "source": ".",
+      "description": "Build and manage AI agents on the Diva platform with the Diva SDK (Python & TypeScript) — ready-made skills, project scaffolds, and the Diva platform MCP wired in.",
+      "version": "0.1.0",
+      "homepage": "https://front.dev.diva-ai.ru/ux/sdk-docs",
+      "keywords": ["diva", "sdk", "agents", "mcp", "ai-agents", "diva-ai"]
+    }
+  ]
+}
