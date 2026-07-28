@@ -60,10 +60,10 @@ create or mutate anything — every other tool is scoped to exactly that org.
 ### `create_agent`: the `v2_agi` runtime dependency (read this)
 
 `runtime_version` defaults to **`"v2_agi"`** and you almost always want it there.
-`v2_agi` seeds the agent's IskariotAGI workspace and rebuilds the sidecar config —
+`v2_agi` seeds the agent's runtime workspace and rebuilds the sidecar config —
 and it is **required** for `list_sessions` / `get_session` / `list_runs` / `get_run`
 / `set_operating_mode` to do anything. `"v1_langgraph"` is **legacy**: an agent
-created on it has no IskariotAGI sidecar, so the session/run/operating-mode tools
+created on it has no runtime sidecar, so the session/run/operating-mode tools
 have nothing to read or set. If you plan to observe or flow-drive an agent, keep
 `v2_agi`.
 

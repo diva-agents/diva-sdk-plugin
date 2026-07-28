@@ -1,0 +1,188 @@
+[
+  {
+    "items": [
+      {
+        "slug": "index",
+        "order": 0,
+        "title": "Diva SDK"
+      },
+      {
+        "slug": "getting-started",
+        "order": 1,
+        "title": "Getting started"
+      },
+      {
+        "slug": "core-concepts",
+        "order": 2,
+        "title": "Core concepts"
+      },
+      {
+        "slug": "agents",
+        "order": 3,
+        "title": "Agents"
+      },
+      {
+        "slug": "tools",
+        "order": 4,
+        "title": "Tools"
+      },
+      {
+        "slug": "toolsets",
+        "order": 5,
+        "title": "Toolsets"
+      },
+      {
+        "slug": "sessions-and-memory",
+        "order": 6,
+        "title": "Sessions & memory"
+      },
+      {
+        "slug": "structured-output",
+        "order": 7,
+        "title": "Structured output"
+      },
+      {
+        "slug": "streaming",
+        "order": 8,
+        "title": "Streaming"
+      },
+      {
+        "slug": "permissions",
+        "order": 9,
+        "title": "Permissions"
+      },
+      {
+        "slug": "hooks",
+        "order": 10,
+        "title": "Hooks"
+      },
+      {
+        "slug": "guards",
+        "order": 11,
+        "title": "Guards"
+      },
+      {
+        "slug": "subagents",
+        "order": 12,
+        "title": "Sub-agents"
+      },
+      {
+        "slug": "parallel-agents",
+        "order": 13,
+        "title": "Parallel agents"
+      },
+      {
+        "slug": "skills",
+        "order": 14,
+        "title": "Skills"
+      },
+      {
+        "slug": "flow",
+        "order": 15,
+        "title": "Flow"
+      },
+      {
+        "slug": "mcp",
+        "order": 16,
+        "title": "External MCP servers"
+      },
+      {
+        "slug": "code-execution",
+        "order": 17,
+        "title": "Code execution & built-in tools"
+      },
+      {
+        "slug": "model-configuration",
+        "order": 18,
+        "title": "Model configuration"
+      },
+      {
+        "slug": "error-handling",
+        "order": 19,
+        "title": "Error handling"
+      },
+      {
+        "slug": "deployment",
+        "order": 20,
+        "title": "Deployment — where the engine runs"
+      }
+    ],
+    "category": "Guides"
+  },
+  {
+    "items": [
+      {
+        "kind": "class",
+        "slug": "api/agent",
+        "order": 1,
+        "title": "Agent"
+      },
+      {
+        "kind": "class",
+        "slug": "api/agentsession",
+        "order": 2,
+        "title": "AgentSession"
+      },
+      {
+        "kind": "function",
+        "slug": "api/tool",
+        "order": 3,
+        "title": "tool"
+      },
+      {
+        "kind": "function",
+        "slug": "api/toolset",
+        "order": 4,
+        "title": "toolset"
+      },
+      {
+        "kind": "function",
+        "slug": "api/handoff",
+        "order": 5,
+        "title": "handoff"
+      },
+      {
+        "kind": "function",
+        "slug": "api/parallel",
+        "order": 6,
+        "title": "parallel"
+      },
+      {
+        "kind": "function",
+        "slug": "api/skill",
+        "order": 7,
+        "title": "skill"
+      },
+      {
+        "kind": "function",
+        "slug": "api/flow",
+        "order": 8,
+        "title": "flow"
+      },
+      {
+        "kind": "constant",
+        "slug": "api/mcp",
+        "order": 9,
+        "title": "MCP"
+      },
+      {
+        "kind": "type",
+        "slug": "api/agentresult",
+        "order": 10,
+        "title": "AgentResult"
+      },
+      {
+        "kind": "type",
+        "slug": "api/structuredresult",
+        "order": 11,
+        "title": "StructuredResult"
+      },
+      {
+        "slug": "api-reference",
+        "order": 100,
+        "title": "API reference"
+      }
+    ],
+    "category": "Reference"
+  }
+]

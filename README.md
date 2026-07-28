@@ -2,7 +2,7 @@
 
 Build and manage AI agents on the [Diva](https://front.dev.diva-ai.ru/ux/sdk-docs)
 platform with the Diva SDK — `diva-ai` (Python) or `@diva-ai/sdk` (TypeScript) —
-without leaving Claude Code. This plugin bundles a set of SDK skills, six slash
+without leaving Claude Code. This plugin bundles a set of SDK skills, seven slash
 commands, three specialist subagents, and the hosted Diva platform MCP server.
 
 Diva SDK agents are a **thin client**: `Agent(model, ...)` opens a WebSocket to
@@ -64,6 +64,7 @@ enable the plugin, or set it any time via `/plugin`).
   | `/diva:run-example` | Pull a real, documented example (quickstart, tools, mcp, subagents, streaming, …) and run it. |
   | `/diva:deploy` | Register/update an agent on the platform via the platform MCP — **confirmation-gated**: preflight → plan → ask → execute → verify. |
   | `/diva:debug-session` | Inspect a session/run via the platform MCP and diagnose failures against the SDK's `DivaError` hierarchy. |
+  | `/diva:verify-flow` | Validate a funnel / frame-flow JSON against the current grammar + save-time invariants before you save. |
 
 - **Subagents** (delegate automatically, or invoke by name):
   | Agent | What it does |
@@ -79,6 +80,11 @@ enable the plugin, or set it any time via `/plugin`).
   sessions & runs, watch usage, and list channels — all scoped to your org by
   the key (no cross-org access). The **`platform-admin`** skill documents every
   tool; `/diva:deploy` and `/diva:debug-session` drive them.
+
+- **References** (`references/`) — the full SDK API reference (TypeScript & Python,
+  English), generated from the live docs pipeline and pinned per version; refresh
+  with `node scripts/sync-docs.mjs` on each release (it pulls the latest bundles from
+  the docs endpoint). Skills point here for exact signatures.
 
 ## Docs
 

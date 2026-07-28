@@ -1,0 +1,16 @@
+{
+  "source": "https://api.diva-ai.ru/v1/docs",
+  "language": "en",
+  "syncedFrom": {
+    "typescript": {
+      "version": "0.1.0-alpha.1",
+      "generatedAt": "2026-07-27T10:23:51.505Z",
+      "pages": 33
+    },
+    "python": {
+      "version": "0.1.0a1",
+      "generatedAt": "2026-07-27T10:23:50.239970+00:00",
+      "pages": 32
+    }
+  }
+}

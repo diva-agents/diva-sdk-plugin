@@ -13,6 +13,11 @@ deployment, error-handling) for depth.
 Full docs (always the source of truth, kept in sync with the code):
 **https://front.dev.diva-ai.ru/ux/sdk-docs** (Python & TypeScript, EN/RU).
 
+For exact signatures offline, this plugin bundles the generated API reference at
+`${CLAUDE_PLUGIN_ROOT}/references/typescript/` and `.../python/` (English,
+version-pinned; refreshed by `scripts/sync-docs.mjs`). See `references/manifest.json`
+for the pinned SDK versions.
+
 ## Operating principles (read before writing code)
 
 1. **Thin client, engine runs server-side.** The SDK never runs an agent engine
