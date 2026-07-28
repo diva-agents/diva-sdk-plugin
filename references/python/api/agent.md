@@ -26,9 +26,9 @@ run(message: str, session_id: str | None = None, timeout: float | None = None, m
 | param | type | required |
 |---|---|---|
 | `message` | `str` | yes |
-| `session_id` | `str | None` | no |
-| `timeout` | `float | None` | no |
-| `model` | `str | None` | no |
+| `session_id` | `str \| None` | no |
+| `timeout` | `float \| None` | no |
+| `model` | `str \| None` | no |
 
 Returns: `AgentResult`
 
@@ -44,9 +44,9 @@ one terminal ``DoneChunk`` carrying the full text + observability.
 | param | type | required |
 |---|---|---|
 | `message` | `str` | yes |
-| `session_id` | `str | None` | no |
-| `timeout` | `float | None` | no |
-| `model` | `str | None` | no |
+| `session_id` | `str \| None` | no |
+| `timeout` | `float \| None` | no |
+| `model` | `str \| None` | no |
 
 Returns: `AsyncIterator[AgentStreamChunk]`
 
@@ -65,8 +65,8 @@ conversation. Raises ``DivaRequestError`` if the retry also fails.
 |---|---|---|
 | `message` | `str` | yes |
 | `schema` | `type[TSchema]` | yes |
-| `timeout` | `float | None` | no |
-| `model` | `str | None` | no |
+| `timeout` | `float \| None` | no |
+| `model` | `str \| None` | no |
 
 Returns: `StructuredResult`
 
@@ -78,7 +78,7 @@ session(session_id: str | None = None) -> AgentSession
 
 | param | type | required |
 |---|---|---|
-| `session_id` | `str | None` | no |
+| `session_id` | `str \| None` | no |
 
 Returns: `AgentSession`
 

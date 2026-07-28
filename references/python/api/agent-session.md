@@ -21,7 +21,7 @@ run(message: str, timeout: float | None = None) -> AgentResult
 | param | type | required |
 |---|---|---|
 | `message` | `str` | yes |
-| `timeout` | `float | None` | no |
+| `timeout` | `float \| None` | no |
 
 Returns: `AgentResult`
 
@@ -34,7 +34,7 @@ stream(message: str, timeout: float | None = None) -> AsyncIterator[AgentStreamC
 | param | type | required |
 |---|---|---|
 | `message` | `str` | yes |
-| `timeout` | `float | None` | no |
+| `timeout` | `float \| None` | no |
 
 Returns: `AsyncIterator[AgentStreamChunk]`
 

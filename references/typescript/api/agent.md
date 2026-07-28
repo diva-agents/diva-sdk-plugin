@@ -29,7 +29,7 @@ Run one turn and return the assistant's reply.
 | param | type | required |
 |---|---|---|
 | `message` | `string` | yes |
-| `opts` | `RunOptions | undefined` | no |
+| `opts` | `RunOptions \| undefined` | no |
 
 Returns: `Promise<AgentResult>`
 
@@ -53,7 +53,7 @@ for await (const chunk of agent.stream("Tell me a joke")) {
 | param | type | required |
 |---|---|---|
 | `message` | `string` | yes |
-| `opts` | `RunOptions | undefined` | no |
+| `opts` | `RunOptions \| undefined` | no |
 
 Returns: `AsyncGenerator<AgentStreamChunk, any, any>`
 
@@ -95,7 +95,7 @@ output.email; // typed
 |---|---|---|
 | `message` | `string` | yes |
 | `schema` | `TSchema` | yes |
-| `opts` | `RunOptions | undefined` | no |
+| `opts` | `RunOptions \| undefined` | no |
 
 Returns: `Promise<StructuredResult<output<TSchema>>>`
 
@@ -117,7 +117,7 @@ await chat.run("My name is Ada.");
 
 | param | type | required |
 |---|---|---|
-| `sessionId` | `string | undefined` | no |
+| `sessionId` | `string \| undefined` | no |
 
 Returns: `AgentSession`
 

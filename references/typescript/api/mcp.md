@@ -24,7 +24,7 @@ MCP.stdio("filesystem", "npx", { args: ["-y", "@modelcontextprotocol/server-file
 |---|---|---|
 | `name` | `string` | yes |
 | `command` | `string` | yes |
-| `opts` | `{ args?: string[] | undefined; env?: Record<string, string> | undefined; cwd?: string | undefined; } | undefined` | no |
+| `opts` | `{ args?: string[] \| undefined; env?: Record<string, string> \| undefined; cwd?: string \| undefined; } \| undefined` | no |
 
 Returns: `McpServer`
 
@@ -45,7 +45,7 @@ MCP.http("weather", "https://mcp.example.com/mcp", { headers: { Authorization: `
 |---|---|---|
 | `name` | `string` | yes |
 | `url` | `string` | yes |
-| `opts` | `{ headers?: Record<string, string> | undefined; sse?: boolean | undefined; } | undefined` | no |
+| `opts` | `{ headers?: Record<string, string> \| undefined; sse?: boolean \| undefined; } \| undefined` | no |
 
 Returns: `McpServer`
 
