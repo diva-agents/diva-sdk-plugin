@@ -164,8 +164,9 @@ duplicate slot name, no `completion()`, an unknown slot in `requires`, or a gate
   TS guide describes injections appending text *after* a specific tool result — a different
   delivery point (only relevant if you lean on `.injection()` in Python, which — per above — the
   local interpreter doesn't act on anyway).
-- **`gate` `maxBlocks`/`max_blocks` range differs.** TS clamps to **1..10** (default 2). Python
-  accepts any positive integer, unclamped (default 2).
+- **`gate`/`completion` block counts default to 2 and are not clamped** in either language
+  (a stray "1..10" mention in a TS doc comment is not enforced) — set `maxBlocks`/`max_blocks`
+  explicitly if you want more or fewer nudge cycles.
 
 ## Gotchas
 

@@ -78,10 +78,10 @@ cost-accounting side channel; a throwing observer is ignored.
 - **Default timeout is the same (180 s)** — `timeoutMs`/`timeout_ms` — but keep the *sub-agent's*
   own request timeout (TS: `requestTimeoutMs`) below it so the sub-agent's own bound fires first.
   Python has no separate sub-agent request-timeout knob to coordinate.
-- **Error wrapper text differs slightly** but the class is the same: both raise `DivaError` —
-  TS: `` `handoff to "<name>" failed: <cause>` ``; Python: `` `handoff to "<name>" failed: <cause>` ``
-  (single-quoted in Python's message). Either way the parent model sees an attributed failure
-  instead of an opaque tool error.
+- **Error wrapper is identical in both languages.** Both raise `DivaError` with the message
+  `` `handoff to "<name>" failed: <cause>` `` — the name is double-quoted in Python too, byte-for-byte
+  the same as TS. Either way the parent model sees an attributed failure instead of an opaque tool
+  error.
 
 ## Parallel agents
 
@@ -91,7 +91,7 @@ Three ways to get concurrency; pick by who's driving:
 | --- | --- | --- |
 | `parallel(tasks, { concurrency })` | your code | your process, one connection per task |
 | parallel `handoff()` calls | the model (parallel tool calls in one turn) | your process |
-| `builtinTools.subagents` | the model (spawns) | **TS self-host only** — see below |
+| `builtinTools.subagents` | the model (spawns) | **engine-side only** — not passable via the SDK; see below |
 
 ### `parallel()` — explicit, code-orchestrated
 
@@ -134,27 +134,26 @@ When the parent model emits parallel tool calls in one turn, multiple `handoff()
 concurrently in your process automatically — bounded by the same 64-in-flight backstop as a single
 handoff, in both SDKs. No extra code either way.
 
-### Host-side `builtinTools.subagents` — TS-only, self-host-only
+### Host-side `builtinTools.subagents` — engine-side, not passable through the SDK
 
-**This mechanism does not exist in Python at all**, and it is not a temporary gap: `diva_ai` is a
-thin client end-to-end — there is no local engine process for it to configure fair-scheduling
-lanes on, on any gateway target. In TS it's **also** unavailable on the **hosted** client
-(throws `DivaNotImplementedError` there) — it only runs self-hosted, where the engine spawns a
-batch of sub-agent turns on per-tenant fair-scheduled lanes:
+`builtinTools.subagents` is an **engine-host** capability, not an option you can pass to
+`new Agent(...)`. Through the published `@diva-ai/sdk` thin client, any `builtinTools` throws
+`DivaNotImplementedError` at construction on **every** target — hosted *and* a self-hosted
+`remoteHost` (the check is unconditional; see the **code-execution** skill). In `diva_ai` there is
+no `builtin_tools` parameter at all. If you self-host the **engine**, you configure subagent
+fair-scheduling lanes **on the engine directly** — the shape below is that engine config for
+reference, not SDK-callable code:
 
 ```ts
-// TypeScript, self-host only
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
-  instructions: "Break the task into independent parts, run them as parallel sub-agents, merge.",
-  builtinTools: { subagents: { maxParallel: 16, perTenantMaxParallel: 8, maxSpawnDepth: 1 } },
-});
+// Engine-side config (self-hosted engine) — NOT passable to new Agent(...) through the SDK
+{ subagents: { maxParallel: 16, perTenantMaxParallel: 8, maxSpawnDepth: 1 } }
 ```
 
-Un-gates spawn/observe tools only (`sessions_spawn`, `sessions_yield`, `session_status`,
+It un-gates spawn/observe tools only (`sessions_spawn`, `sessions_yield`, `session_status`,
 `sessions_list`, `sessions_history`, `agents_list`); `sessions_send` (agent-to-agent messaging) and
-the `steer` action stay deliberately denied — these are independent parallel sub-agents, not a
-dialogue. For Python, or for the TS hosted client, use `parallel()` / parallel `handoff()` for
-large fan-outs instead — there is no host-side lane to fall back to in either of those paths.
+the `steer` action stay deliberately denied — independent parallel sub-agents, not a dialogue.
+**For fan-out via the SDK, always use `parallel()` / parallel `handoff()`** — there is no
+host-side lane reachable through either thin client.
 
 ## Gotchas
 

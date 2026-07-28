@@ -112,12 +112,14 @@ wrap it in `contextlib.aclosing(...)` for a deterministic cancel.
   `instructions` persona. Python appends it to the **user message** instead —
   `instructions` passes through unchanged, so a very conversational persona can
   wrap JSON in more prose there than in TS.
-- **`stream()`'s `done` chunk shape differs by language.** TS `done` carries
-  only `text`/`runId`. Python's `DoneChunk` additionally carries `reasoning`,
-  `usage`, `duration_ms`, `stop_reason` — mirroring `AgentResult`. Python also
-  defines a `ReasoningChunk` variant in the type union for forward
-  compatibility, but `Agent.stream()` does not currently yield it (reasoning
-  text, if any, lands as one string on `DoneChunk.reasoning`).
+- **`stream()`'s `done` chunk carries the full result — in both languages.** The
+  terminal chunk exposes `text` plus optional `reasoning`, `usage`, and
+  `durationMs`/`stopReason` (TS) / `duration_ms`/`stop_reason` (Python) — the same
+  field set as `AgentResult`, so you can read usage/cost off the `done` chunk
+  without a follow-up `run()`. Reasoning text, if any, lands as one string on the
+  done chunk's `reasoning`. (Python also defines a `ReasoningChunk` variant in the
+  type union for forward compatibility, but `Agent.stream()` does not currently
+  yield it.)
 - **Deltas are raw; the terminal chunk is authoritative.** Reply hooks/guards
   run on `done.text`/`DoneChunk.text`, not on the deltas — a hook can rewrite or
   block the final text even after you've already rendered deltas live.

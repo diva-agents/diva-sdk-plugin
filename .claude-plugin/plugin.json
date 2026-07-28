@@ -9,7 +9,7 @@
   "userConfig": {
     "diva_api_key": {
       "type": "string",
-      "description": "Your Diva API key (sk-diva-…). Used as the bearer token for the Diva platform MCP and by the SDK. Get it from your Diva workspace → Developers → SDK.",
+      "description": "Your Diva API key (sk-diva-…). Bearer token for the bundled Diva platform MCP server. To run SDK agents from your shell, set the same value as DIVA_API_KEY in your environment/.env — this plugin config does not export it. Get it from your Diva workspace → Developers → SDK.",
       "sensitive": true
     }
   }

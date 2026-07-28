@@ -55,15 +55,16 @@ self_hosted = Agent("diva/gpt/gpt-4o-mini", api_key=os.environ["GATEWAY_TOKEN"],
   when the connection opens: `wss://` always allowed; plain `ws://` only to `localhost`/
   `127.0.0.1`/`::1` unless you set `DIVA_ALLOW_INSECURE_PRIVATE_WS=1`. Anything else raises
   `DivaAuthError` naming the rejected host.
-- **Host-owned config scope is fundamentally narrower in Python.** TS: `builtinTools` and
-  `permissions.mode`/`permissions.deny` gate the engine's shell/filesystem/network built-ins —
-  they're **self-host only**, throwing `DivaNotImplementedError` on the hosted platform (enabling
-  them for a shared host would be RCE for anyone with a key). Python: **there is no
+- **Host-owned config is not passable through either thin client.** `builtinTools` and
+  `permissions.mode`/`permissions.deny` gate the engine's shell/filesystem/network built-ins. TS:
+  passing either to `new Agent(...)` throws `DivaNotImplementedError` at construction on **every**
+  target — hosted *and* a self-hosted `remoteHost`/`DIVA_GATEWAY_URL` (the check is unconditional;
+  enabling them on a shared host would be RCE for anyone with a key). Python: **there is no
   `builtin_tools` parameter at all**, and `Permissions.mode`/`Permissions.deny` **always** raise
-  `DivaNotImplementedError` regardless of which `gateway_url` you point at — `diva_ai` is a thin
-  client end-to-end; self-hosting the *gateway* does not unlock engine built-ins in the *Python
-  client*. To get the same effect in either SDK, wrap what you need as your own client `tool()`
-  (it runs on your machine — sandbox it there).
+  `DivaNotImplementedError` regardless of `gateway_url`. In both, these are **engine-side**
+  capabilities: configure them on a self-hosted *engine* directly, not through this client. To get
+  the same effect via the SDK, wrap what you need as your own client `tool()` (it runs on your
+  machine — sandbox it there). See the **code-execution** skill.
 - Everything else — `tools`, `mcp`, `params`, `thinkingDefault`/`thinking_default`, `flow`,
   `hooks`, `guards`, `handoff`, interactive `permissions.canUseTool`/`can_use_tool` + `allow` —
   works over either target, per-turn, in both SDKs. Because **all** tools are client tools in both

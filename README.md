@@ -2,7 +2,7 @@
 
 Build and manage AI agents on the [Diva](https://front.dev.diva-ai.ru/ux/sdk-docs)
 platform with the Diva SDK — `diva-ai` (Python) or `@diva-ai/sdk` (TypeScript) —
-without leaving Claude Code. This plugin bundles the SDK skill, seven slash
+without leaving Claude Code. This plugin bundles a set of SDK skills, six slash
 commands, three specialist subagents, and the hosted Diva platform MCP server.
 
 Diva SDK agents are a **thin client**: `Agent(model, ...)` opens a WebSocket to
@@ -33,12 +33,19 @@ install alone:
 ### Set your API key
 
 The plugin needs one setting, `diva_api_key` — your Diva platform key
-(`sk-diva-…`), marked sensitive in the manifest. It's the bearer token for
-**both** the bundled platform MCP server and (via `DIVA_API_KEY` in your own
-shell/`.env`) the SDK itself when you run agents locally. Get it from your Diva
-workspace → **Developers → SDK**, then set it through Claude Code's plugin
-settings for `diva-sdk` (you'll be prompted for it when you enable the plugin,
-or set it any time via `/plugin`).
+(`sk-diva-…`), marked sensitive in the manifest. **It is used in two separate
+places:**
+
+- **The platform MCP** reads it directly from plugin config as its bearer
+  token — set it and the MCP tools work.
+- **The SDK itself** (when you run agents) reads `DIVA_API_KEY` from your own
+  shell/`.env`. The plugin config does **not** export it, so set the same value
+  there too — e.g. `export DIVA_API_KEY=sk-diva-…`. Otherwise SDK runs throw
+  `DivaAuthError`.
+
+Get it from your Diva workspace → **Developers → SDK**, then set it through
+Claude Code's plugin settings for `diva-sdk` (you'll be prompted for it when you
+enable the plugin, or set it any time via `/plugin`).
 
 ## What's inside
 
@@ -65,11 +72,13 @@ or set it any time via `/plugin`).
   | `diva-mcp-integrator` | Wires MCP servers into an agent, including the platform/external distinction and each SDK's owns-host and secrets rules. |
   | `diva-sdk-verifier` | Read-only review of Diva SDK code for correctness — traffic-lock, fail-loud vs. silent fallback, snake_case/camelCase, owns-host conflicts — split-aware of Python vs. TypeScript. |
 
-- **MCP** — the `platform` server (`.mcp.json`, `https://mcp.diva-ai.ru/mcp`),
-  authenticated with your `diva_api_key`. Once set, its tools let you
-  list/create agents, wire channels, inspect sessions & runs, manage the
-  knowledge base and CRM, and watch usage — all scoped to your org by the key.
-  `/diva:deploy` and `/diva:debug-session` drive it directly.
+- **MCP** — the `platform` server (`.mcp.json`,
+  `https://api.diva-ai.ru/mcp/platform-admin/mcp`), authenticated with your
+  `diva_api_key`. Its 12 tools let you confirm your identity (`whoami`),
+  list/get/create/update agents, set an agent's operating mode, inspect
+  sessions & runs, watch usage, and list channels — all scoped to your org by
+  the key (no cross-org access). The **`platform-admin`** skill documents every
+  tool; `/diva:deploy` and `/diva:debug-session` drive them.
 
 ## Docs
 

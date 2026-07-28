@@ -22,8 +22,9 @@ Full docs (always the source of truth, kept in sync with the code):
    auth is a **bearer `sk-diva-…` key only** — there is no bring-your-own-provider
    and no local model. Don't try to point the SDK at OpenAI/Anthropic directly.
 3. **Fail-loud, never silent.** Unwired/planned features raise a typed
-   `DivaNotImplementedError` at construction (e.g. `knowledge=`, `permissions.mode`,
-   hosted `builtinTools`). If you hit one, the feature isn't available yet — don't
+   `DivaNotImplementedError` — `permissions.mode`/`deny` and hosted `builtinTools`
+   throw at construction (TS); `knowledge=` throws at construction in Python but at
+   the first `run()` in TS. If you hit one, the feature isn't available yet — don't
    work around it silently.
 4. **Model refs are namespaced** `diva/<family>/<model>` — the platform routes
    them to the real backend. A per-turn override is `run(..., model=...)`.
@@ -58,16 +59,48 @@ console.log(reply.text);
 ## Managing agents on the platform
 
 This plugin bundles the **Diva platform MCP** (`platform` server in `.mcp.json`).
-Once you set your `diva_api_key`, its tools let you list/create agents, wire
-channels, inspect sessions & runs, manage the knowledge base and CRM, and watch
-usage — all scoped to your org by the key. Use those tools to operate what you
-build with the SDK.
+Once you set your `diva_api_key`, its 12 tools let you confirm identity
+(`whoami`), list/get/create/update agents, set an agent's operating mode, inspect
+sessions & runs, watch usage, and list channels — all scoped to your org by the
+key. See the **platform-admin** skill for the full tool reference. Use those tools
+to operate what you build with the SDK.
+
+## Agent options & lifecycle (one-stop map)
+
+`new Agent(model, {...})` (TS) / `Agent(model, ...=)` (Python) — each option is covered
+in depth by a specialist skill:
+
+| Option | Skill |
+| --- | --- |
+| `tools`, `toolset` | **tools-and-toolsets** |
+| `mcp` (external servers) | **mcp** |
+| `hooks`, `flow` | **hooks-flow** |
+| `guards`, `permissions` | **guards-permissions** |
+| `skills` (+ TS `skillsMode`) | **agent-skills** |
+| `builtinTools` (self-host only) | **code-execution** |
+| `instructions`, `thinking`, model params, `compaction` (TS) | **deployment-and-errors** |
+| `apiKey`/`api_key`, sessions & `store` | **sessions-memory** |
+| operate/inspect agents on the platform | **platform-admin** |
+
+Per-call override: `run(prompt, { model, timeoutMs })` / `run(prompt, model=, timeout_ms=)`.
+
+**Host lifecycle:**
+- **TypeScript** — an `Agent` owns a local host. `await agent.start()` pre-warms it
+  (optional; the first turn boots it otherwise); `await agent.close()` tears it down and
+  does **not** cascade to handoff sub-agents (close each yourself); `agent.session(key)`
+  returns a keyed handle. To share one host across agents, pass `clientOptions` / a shared
+  `DivaClient` — but `mcp`/`hooks`/`flow` conflict with an explicit shared `client` and throw
+  at construction (use `clientOptions` instead).
+- **Python** — `diva_ai` is a pure thin client: **no `start()`**, no shared-client concept;
+  every `run()` opens/closes a gateway WebSocket; `await agent.close()` releases pooled
+  resources; `agent.session(key)` mirrors TS.
 
 ## Footgun checklist
 
-- Set `DIVA_API_KEY` (env) or pass `api_key=` — the key is validated lazily (on the
-  first turn), so a missing key surfaces as `DivaAuthError` when you run, not at
-  construction.
+- Set `DIVA_API_KEY` (env) or pass `api_key=`/`apiKey`. **Validation timing differs
+  by language:** Python validates lazily (a missing key surfaces as `DivaAuthError`
+  on the first `run()`), while **TypeScript validates eagerly** — `new Agent(...)`
+  throws `DivaAuthError` at construction when no key and no `remoteHost` is set.
 - Client `tool()`s execute **in your process**; the platform sandboxes nothing on
   your side — treat tool inputs as untrusted and validate them yourself.
 - `params` (Python) / `params` (TS) is a **raw wire passthrough** — its keys stay
