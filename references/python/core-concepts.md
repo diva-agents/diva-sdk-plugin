@@ -50,7 +50,7 @@ engine — it only ever connects to a remote gateway over the network.
 modes:
 
 - **Platform (default).** `Agent(model, api_key=...)` (or the `DIVA_API_KEY` env
-  var) connects to the Diva platform gateway at `wss://api.diva.ai/gateway` — the
+  var) connects to the Diva platform gateway at `wss://api.diva-ai.ru/gateway` — the
   SDK's built-in `DEFAULT_GATEWAY_URL`. The engine runs **server-side and is
   never downloaded**.
 - **Self-host (advanced).** Pass `gateway_url=` (or set `DIVA_GATEWAY_URL`) to

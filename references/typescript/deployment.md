@@ -33,7 +33,7 @@ const { text } = await agent.run("Hi!");
 await agent.close(); // closes the gateway connection
 ```
 
-- **Gateway URL.** Defaults to `wss://api.diva.ai/gateway`. Override with `DIVA_GATEWAY_URL`
+- **Gateway URL.** Defaults to `wss://api.diva-ai.ru/gateway`. Override with `DIVA_GATEWAY_URL`
   (used for staging, preview, or pointing at a Diva-provided endpoint).
 - **Your tools stay yours.** Any `tool()` / MCP server you attach executes **in your process**
   over the turn's WebSocket (see [Tools](./tools.md), [MCP](./mcp.md)). The engine never sees
@@ -77,7 +77,7 @@ The client resolves the gateway to connect to in this order:
    `remoteHost` authenticates.
 2. **`DIVA_GATEWAY_URL` pinned** → connect there with the `apiKey` as the token (self-host /
    testing endpoint).
-3. **`apiKey` only** → the platform gateway (`wss://api.diva.ai/gateway`), mode 1.
+3. **`apiKey` only** → the platform gateway (`wss://api.diva-ai.ru/gateway`), mode 1.
 
 If none of the three is available, construction throws an actionable `DivaAuthError`. If the
 resolved gateway can't be reached, the SDK fails with a `DivaRequestError` naming the endpoint

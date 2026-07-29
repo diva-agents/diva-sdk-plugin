@@ -23,7 +23,7 @@ for the pinned SDK versions.
 1. **Thin client, engine runs server-side.** The SDK never runs an agent engine
    locally. `run` / `stream` / `generate` open a WebSocket to the Diva gateway;
    all model traffic and tool orchestration happen on the platform.
-2. **Traffic-lock.** The gateway URL defaults to `wss://api.diva.ai/gateway` and
+2. **Traffic-lock.** The gateway URL defaults to `wss://api.diva-ai.ru/gateway` and
    auth is a **bearer `sk-diva-…` key only** — there is no bring-your-own-provider
    and no local model. Don't try to point the SDK at OpenAI/Anthropic directly.
 3. **Fail-loud, never silent.** Unwired/planned features raise a typed

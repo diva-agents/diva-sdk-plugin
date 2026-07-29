@@ -45,7 +45,7 @@ async def main() -> None:
 asyncio.run(main())
 ```
 
-- **Gateway URL.** Defaults to `wss://api.diva.ai/gateway`
+- **Gateway URL.** Defaults to `wss://api.diva-ai.ru/gateway`
   (`DEFAULT_GATEWAY_URL` in `diva_ai.gateway_client`). Override with
   `DIVA_GATEWAY_URL` (staging, preview, or a Diva-provided endpoint) or the
   `gateway_url=` constructor argument.
@@ -112,7 +112,7 @@ first turn:
 
 1. **`gateway_url=` passed to `Agent(...)`.**
 2. **`DIVA_GATEWAY_URL` environment variable.**
-3. **`DEFAULT_GATEWAY_URL`** (`wss://api.diva.ai/gateway`) — the platform.
+3. **`DEFAULT_GATEWAY_URL`** (`wss://api.diva-ai.ru/gateway`) — the platform.
 
 The bearer token is always `api_key=` (or `DIVA_API_KEY`) — there's no
 separate token source for either mode. If no API key is resolvable when a

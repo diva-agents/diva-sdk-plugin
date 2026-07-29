@@ -19,7 +19,7 @@ in API parity: `@diva-ai/sdk` (TypeScript, Node ≥ 22.14) and `diva-ai` (Python
 2. **Traffic-lock.** Auth is a bearer `sk-diva-…` key only, read from
    `DIVA_API_KEY`. There is no bring-your-own-provider. Never hardcode a
    non-Diva gateway URL or point the client at OpenAI/Anthropic directly. The
-   default gateway is `wss://api.diva.ai/gateway`; only override via
+   default gateway is `wss://api.diva-ai.ru/gateway`; only override via
    `DIVA_GATEWAY_URL` / `clientOptions.remoteHost` (TS) or `gateway_url=` (Py)
    when the user explicitly wants self-host/local-dev mode.
 3. **Fail-loud, never silent.** Unwired features (`knowledge`,
