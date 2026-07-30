@@ -77,7 +77,7 @@ async function main(): Promise<void> {
   const crm = toolset("crm", [createLead]);
   const ops = toolset("ops", [deploy]);
 
-  const agent = new Agent("diva/gpt/gpt-4o-mini", {
+  const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
     instructions: "Use the available tools to fulfil the request. Report what you did.",
     toolsets: [crm, ops],
   });
@@ -111,7 +111,7 @@ const ops = toolset("ops", [deploy]);
 // One flat, collision-checked list — order preserved (crm's tools, then ops').
 const allTools = composeToolsets([crm, ops]);
 
-const agent = new Agent("diva/gpt/gpt-4o-mini", { tools: allTools });
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", { tools: allTools });
 ```
 
 ## API

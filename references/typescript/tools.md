@@ -116,7 +116,7 @@ const getWeather = tool({
 async function main(): Promise<void> {
   // A tool-bearing agent owns its host, so configure via clientOptions (not a
   // shared `client`).
-  const agent = new Agent("diva/gpt/gpt-4o-mini", {
+  const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
     instructions: "Answer weather questions by calling get_weather. Be concise.",
     tools: [getWeather],
   });

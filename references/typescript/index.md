@@ -7,7 +7,7 @@ sessions — as a library: you describe an agent, call `run()`, and get a reply.
 ```ts
 import { Agent } from "@diva-ai/sdk";
 
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   instructions: "You are a concise assistant.",
 });
 

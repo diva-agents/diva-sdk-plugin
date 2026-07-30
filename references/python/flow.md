@@ -127,7 +127,7 @@ order_funnel = (
 
 async def main() -> None:
     agent = Agent(
-        "diva/gpt/gpt-4o-mini",
+        "diva/deepseek/deepseek-v4-flash",
         instructions="You take customer orders. Be brief.",
         tools=[set_address_tool, create_order_tool],
         flow=order_funnel,  # enforced client-side by the flow gate

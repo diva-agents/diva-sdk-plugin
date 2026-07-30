@@ -46,7 +46,7 @@ from diva_ai import Agent
 
 async def main() -> None:
     agent = Agent(
-        "diva/gpt/gpt-4o-mini",
+        "diva/deepseek/deepseek-v4-flash",
         # maxTokens is a HARD output cap (finish_reason "length"); temperature
         # lowers randomness. Keys are the platform's wire names, not snake_case.
         params={"maxTokens": 400, "temperature": 0.2},
@@ -152,7 +152,7 @@ from diva_ai import Agent
 
 async def main() -> None:
     agent = Agent(
-        "diva/gpt/gpt-4o-mini",
+        "diva/deepseek/deepseek-v4-flash",
         # Cap length + steer sampling; parallel_tool_calls is OpenAI-scoped.
         params={"maxTokens": 400, "temperature": 0.2, "parallel_tool_calls": False},
         thinking_default="low",

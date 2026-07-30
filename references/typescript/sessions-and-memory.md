@@ -106,7 +106,7 @@ prompt — so don't point it at attacker-writable storage.
 // DIVA_API_KEY=sk-diva-… node --import tsx examples/sessions.ts
 import { Agent } from "@diva-ai/sdk";
 
-const agent = new Agent("diva/gpt/gpt-4o-mini", { instructions: "Answer briefly." });
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", { instructions: "Answer briefly." });
 
 try {
   const chat = agent.session(); // a fresh conversation (random id)
@@ -129,7 +129,7 @@ try {
 // DIVA_API_KEY=sk-diva-… node --import tsx examples/memory.ts
 import { Agent, FileStore } from "@diva-ai/sdk";
 
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   instructions: "You are a concise assistant.",
   // History lives in ./conversations/<hash>.json — a fresh process resumes it.
   store: new FileStore("./conversations", { maxTurns: 50 }),
@@ -162,7 +162,7 @@ function makeStore(): SessionStore {
   };
 }
 
-const agent = new Agent("diva/gpt/gpt-4o-mini", { store: makeStore() });
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", { store: makeStore() });
 ```
 
 ## API

@@ -2,7 +2,7 @@
 
 The top-level entry point of ``diva_ai``.
 
-Construct one with a namespaced model ref (e.g. ``"diva/gpt/gpt-4o-mini"``)
+Construct one with a namespaced model ref (e.g. ``"diva/deepseek/deepseek-v4-flash"``)
 and a set of keyword-only options — ``instructions``, ``tools``/``toolsets``,
 ``permissions``, ``hooks``/``guards``, ``skills``, ``mcp``, ``flow``,
 ``store``, etc. — then call ``run()``, ``stream()``, or ``generate()`` to

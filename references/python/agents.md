@@ -18,7 +18,7 @@ a platform-namespaced model and the turn can never escape the gateway.
 from diva_ai import Agent
 
 agent = Agent(
-    "diva/gpt/gpt-4o-mini",
+    "diva/deepseek/deepseek-v4-flash",
     instructions="You are a terse, friendly assistant.",
 )
 ```
@@ -26,7 +26,7 @@ agent = Agent(
 `Agent(model, *, ...)`:
 
 - `model` (`str`, required, positional) — the platform model ref, e.g.
-  `"diva/gpt/gpt-4o-mini"`. An empty/blank model raises `DivaAuthError`:
+  `"diva/deepseek/deepseek-v4-flash"`. An empty/blank model raises `DivaAuthError`:
   `Agent(model) requires a namespaced model ref, e.g. 'diva/<family>/<model>'`.
 - every other option is a named, **keyword-only** parameter (the constructor
   signature puts `*` right after `model` — not a `**kwargs` catch-all) — see
@@ -44,7 +44,6 @@ A Diva model ref names the platform provider in its first segment.
 
 | Ref | provider | model (engine-relative id) |
 | --- | --- | --- |
-| `"diva/gpt/gpt-4o-mini"` | `diva` | `gpt/gpt-4o-mini` |
 | `"diva/deepseek/deepseek-v4-flash"` | `diva` | `deepseek/deepseek-v4-flash` |
 | `"gpt-4o-mini"` (no namespace) | `""` | `"gpt-4o-mini"` |
 
@@ -96,7 +95,7 @@ see below):
 | --- | --- | --- | --- |
 | `session_id` | `str \| None` | fresh random UUID | Conversation id for multi-turn continuity: successive calls with the same id share history. Omit for a stateless turn. |
 | `timeout` | `float \| None` | the client's internal default (120s for a turn) | Per-call timeout **in seconds** — note this is seconds, not milliseconds. |
-| `model` | `str \| None` | the Agent's own model | Per-call model override (a full platform ref, e.g. `"diva/gpt/gpt-4o-mini"`); the namespace convention still applies, though it isn't locally re-validated (see above). |
+| `model` | `str \| None` | the Agent's own model | Per-call model override (a full platform ref, e.g. `"diva/deepseek/deepseek-v4-flash"`); the namespace convention still applies, though it isn't locally re-validated (see above). |
 
 ## Call methods
 
@@ -232,7 +231,7 @@ Closes any bridged MCP connections and drops the agent's implicit
 `DivaClient`. Always call it in a `finally` block:
 
 ```python
-agent = Agent("diva/gpt/gpt-4o-mini")
+agent = Agent("diva/deepseek/deepseek-v4-flash")
 try:
     result = await agent.run("Hello!")
     print(result.text)
@@ -266,7 +265,7 @@ async def main() -> None:
     )
 
     agent = Agent(
-        "diva/gpt/gpt-4o-mini",
+        "diva/deepseek/deepseek-v4-flash",
         instructions="You are a travel assistant. Use tools when asked about weather.",
         tools=[weather_tool],
         params={"temperature": 0.2, "maxTokens": 400},

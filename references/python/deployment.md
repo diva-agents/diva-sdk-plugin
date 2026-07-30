@@ -33,7 +33,7 @@ from diva_ai import Agent
 
 async def main() -> None:
     agent = Agent(
-        "diva/gpt/gpt-4o-mini",
+        "diva/deepseek/deepseek-v4-flash",
         api_key=os.environ["DIVA_API_KEY"],  # sk-diva-...
         instructions="You are a terse assistant.",
     )
@@ -76,7 +76,7 @@ import os
 from diva_ai import Agent
 
 agent = Agent(
-    "diva/gpt/gpt-4o-mini",
+    "diva/deepseek/deepseek-v4-flash",
     api_key=os.environ["GATEWAY_TOKEN"],  # bearer token for YOUR gateway
     gateway_url="wss://engine.internal.example.com/gateway",
 )

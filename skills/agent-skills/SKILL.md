@@ -36,7 +36,7 @@ const brandVoice = skill({
 });
 const refundPolicy = skillFromDir("./skills/refund-policy"); // reads ./skills/refund-policy/SKILL.md
 
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   instructions: "You are a customer support assistant.",
   skills: [brandVoice, refundPolicy], // skillsMode defaults to "invocable"
 });
@@ -95,7 +95,7 @@ TypeScript `skillsMode?: "invocable" | "prepend"`, default `"invocable"`:
 
 ```ts
 // Prepend: zero-FS, runs against a shared/pooled client.
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   instructions: "You answer product questions.",
   skills: [glossary],
   skillsMode: "prepend",

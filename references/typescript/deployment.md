@@ -24,7 +24,7 @@ no secrets beyond your key.
 ```ts
 import { Agent } from "@diva-ai/sdk";
 
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   apiKey: process.env.DIVA_API_KEY, // sk-diva-…
   instructions: "You are a terse assistant.",
 });
@@ -56,7 +56,7 @@ changes. Use this when you want the engine on your own infrastructure, or for lo
 against a gateway running on `localhost`.
 
 ```ts
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   clientOptions: {
     apiKey: process.env.DIVA_API_KEY,
     remoteHost: { url: "wss://engine.internal.example.com/gateway", token: process.env.GATEWAY_TOKEN },

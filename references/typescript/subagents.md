@@ -51,12 +51,12 @@ import { Agent, handoff } from "@diva-ai/sdk";
 
 async function main(): Promise<void> {
   // A focused sub-agent. It owns its own host and gets an isolated context.
-  const qualifier = new Agent("diva/gpt/gpt-4o-mini", {
+  const qualifier = new Agent("diva/deepseek/deepseek-v4-flash", {
     instructions: "You score sales leads. Reply with a one-line score and reason.",
   });
 
   // The parent can delegate by calling transfer_to_qualifier.
-  const agent = new Agent("diva/gpt/gpt-4o-mini", {
+  const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
     instructions:
       "You triage inbound messages. For anything about a sales lead, call " +
       "transfer_to_qualifier and relay its score. Otherwise answer directly.",
@@ -94,7 +94,7 @@ one opaque string.
 ```ts
 import { Agent, handoff, z } from "@diva-ai/sdk";
 
-const translator = new Agent("diva/gpt/gpt-4o-mini", {
+const translator = new Agent("diva/deepseek/deepseek-v4-flash", {
   instructions: "You translate text. Reply with only the translation.",
 });
 
@@ -109,7 +109,7 @@ const translateTool = handoff(translator, {
   timeoutMs: 120_000, // keep translator.requestTimeoutMs below this
 });
 
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   instructions: "Delegate any translation request to transfer_to_translator.",
   tools: [translateTool],
 });

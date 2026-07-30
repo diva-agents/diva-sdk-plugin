@@ -30,7 +30,7 @@ deliberately once you've sized host resources.
 ```ts
 import { Agent, parallel } from "@diva-ai/sdk";
 
-const reviewer = new Agent("diva/gpt/gpt-4o-mini", {
+const reviewer = new Agent("diva/deepseek/deepseek-v4-flash", {
   instructions: "Review the file. Reply: APPROVE or REQUEST-CHANGES + one reason.",
 });
 
@@ -92,7 +92,7 @@ per-tenant fair-scheduled lanes** — so one tenant's burst can't starve another
 surface for the engine's fair-scheduling lanes.
 
 ```ts
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   instructions: "Break the task into independent parts, run them as parallel sub-agents, and merge.",
   builtinTools: {
     subagents: {

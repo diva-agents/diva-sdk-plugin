@@ -19,10 +19,10 @@ engine — they only ever open a WebSocket connection.
 ```ts
 // TypeScript — platform default
 import { Agent } from "@diva-ai/sdk";
-const agent = new Agent("diva/gpt/gpt-4o-mini", { apiKey: process.env.DIVA_API_KEY });
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", { apiKey: process.env.DIVA_API_KEY });
 
 // self-host — explicit remoteHost always wins
-const selfHosted = new Agent("diva/gpt/gpt-4o-mini", {
+const selfHosted = new Agent("diva/deepseek/deepseek-v4-flash", {
   clientOptions: { remoteHost: { url: "wss://engine.internal/gateway", token: process.env.GATEWAY_TOKEN } },
 });
 ```
@@ -30,10 +30,10 @@ const selfHosted = new Agent("diva/gpt/gpt-4o-mini", {
 ```python
 # Python — platform default
 from diva_ai import Agent
-agent = Agent("diva/gpt/gpt-4o-mini", api_key=os.environ["DIVA_API_KEY"])
+agent = Agent("diva/deepseek/deepseek-v4-flash", api_key=os.environ["DIVA_API_KEY"])
 
 # self-host — one bearer token (api_key) for whichever gateway_url resolves
-self_hosted = Agent("diva/gpt/gpt-4o-mini", api_key=os.environ["GATEWAY_TOKEN"],
+self_hosted = Agent("diva/deepseek/deepseek-v4-flash", api_key=os.environ["GATEWAY_TOKEN"],
                      gateway_url="wss://engine.internal/gateway")
 ```
 
@@ -148,17 +148,17 @@ only** — `compaction` (auto-summarization).
 
 ```ts
 // TypeScript
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   params: { maxTokens: 400, temperature: 0.2 },   // maxTokens is a HARD output cap
   thinkingDefault: "medium",                       // off|minimal|low|medium|high|xhigh|adaptive
-  compaction: { recentTurnsPreserve: 4, maxHistoryShare: 0.4, model: "diva/gpt/gpt-4o-mini" },
+  compaction: { recentTurnsPreserve: 4, maxHistoryShare: 0.4, model: "diva/deepseek/deepseek-v4-flash" },
 });
 ```
 
 ```python
 # Python — params keys are the PLATFORM'S WIRE NAMES, not snake_case
 agent = Agent(
-    "diva/gpt/gpt-4o-mini",
+    "diva/deepseek/deepseek-v4-flash",
     params={"maxTokens": 400, "temperature": 0.2},   # NOT max_tokens
     thinking_default="medium",
 )

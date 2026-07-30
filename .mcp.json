@@ -2,9 +2,9 @@
   "mcpServers": {
     "platform": {
       "type": "http",
-      "url": "https://api.diva-ai.ru/mcp/platform-admin/mcp",
+      "url": "${user_config.diva_mcp_url}",
       "headers": {
-        "Authorization": "Bearer ${user_config.diva_api_key}"
+        "Authorization": "Bearer ${user_config.diva_mcp_key}"
       }
     }
   }

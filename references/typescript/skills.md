@@ -74,7 +74,7 @@ async function main(): Promise<void> {
     body: "Be warm and concise. Never use exclamation marks. Sign off with '— Team Diva'.",
   });
 
-  const agent = new Agent("diva/gpt/gpt-4o-mini", {
+  const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
     instructions: "You are a customer support assistant.",
     skills: [brandVoice], // skillsMode defaults to "invocable"
   });
@@ -131,7 +131,7 @@ const glossary = skill({
   body: "‘Seat’ = one licensed user. ‘Workspace’ = a billing account.",
 });
 
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   instructions: "You answer product questions.",
   skills: [glossary],
   skillsMode: "prepend", // zero-FS: works with a shared client

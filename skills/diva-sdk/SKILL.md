@@ -64,7 +64,7 @@ console.log(reply.text);
 ## Managing agents on the platform
 
 This plugin bundles the **Diva platform MCP** (`platform` server in `.mcp.json`).
-Once you set your `diva_api_key`, its 12 tools let you confirm identity
+Once you set your `diva_mcp_key`, its 12 tools let you confirm identity
 (`whoami`), list/get/create/update agents, set an agent's operating mode, inspect
 sessions & runs, watch usage, and list channels — all scoped to your org by the
 key. See the **platform-admin** skill for the full tool reference. Use those tools

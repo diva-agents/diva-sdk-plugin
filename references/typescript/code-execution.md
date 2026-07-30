@@ -229,7 +229,7 @@ Requires Docker on the host and a live `sk-diva` key (`DIVA_API_KEY`).
 import { Agent } from "@diva-ai/sdk";
 
 async function main(): Promise<void> {
-  const agent = new Agent("diva/gpt/gpt-4o-mini", {
+  const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
     instructions:
       "You have an `exec` tool that runs shell commands in a sandbox. When asked to " +
       "compute something, WRITE and RUN code with exec — never do the arithmetic yourself. " +
@@ -279,7 +279,7 @@ const getBadge = tool({
   execute: async () => ({ badgeNumber: "907341" }),
 });
 
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   instructions: "Answer using get_badge_number; never invent a number.",
   tools: [getBadge],
   // Nothing here → exec/read/write/web_search/… all denied. get_badge_number still runs.
@@ -291,7 +291,7 @@ const agent = new Agent("diva/gpt/gpt-4o-mini", {
 ```ts
 import { Agent } from "@diva-ai/sdk";
 
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   instructions: "Use web_search to look things up; don't answer from memory.",
   builtinTools: { webSearch: true }, // keyless DuckDuckGo; egresses to the search provider
   clientOptions: { requestTimeoutMs: 180_000 },

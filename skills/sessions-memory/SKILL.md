@@ -26,14 +26,14 @@ TypeScript (`@diva-ai/sdk`):
 ```ts
 import { Agent, FileStore } from "@diva-ai/sdk";
 
-const agent = new Agent("diva/gpt/gpt-4o-mini", { instructions: "Answer briefly." });
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", { instructions: "Answer briefly." });
 const chat = agent.session("user-42");     // bind once, or pass { sessionId } per run() call
 await chat.run("My favorite colour is teal.");
 const { text } = await chat.run("What's my favorite colour?"); // remembers turn 1
 await agent.close();
 
 // Client-side memory: history stays on your disk, not Diva's sessions.
-const local = new Agent("diva/gpt/gpt-4o-mini", {
+const local = new Agent("diva/deepseek/deepseek-v4-flash", {
   store: new FileStore("./conversations", { maxTurns: 50 }),
 });
 ```
@@ -42,14 +42,14 @@ Python (`diva-ai`):
 ```python
 from diva_ai import Agent, FileStore
 
-agent = Agent("diva/gpt/gpt-4o-mini", instructions="Answer briefly.")
+agent = Agent("diva/deepseek/deepseek-v4-flash", instructions="Answer briefly.")
 chat = agent.session("user-42")            # bind once, or pass session_id= per run() call
 await chat.run("My favorite colour is teal.")
 result = await chat.run("What's my favorite colour?")  # remembers turn 1
 await agent.close()
 
 # Client-side memory: history stays on your disk, not Diva's sessions.
-local = Agent("diva/gpt/gpt-4o-mini", store=FileStore("./conversations", max_turns=50))
+local = Agent("diva/deepseek/deepseek-v4-flash", store=FileStore("./conversations", max_turns=50))
 ```
 
 A custom store implements three methods — `load`/`append`/`clear` (TS: a plain

@@ -3,7 +3,7 @@
 The top-level entry point for building an agent on the Diva platform.
 
 ```ts
-const agent = new Agent("diva/gpt/gpt-4o-mini", { instructions: "You are a sales assistant." });
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", { instructions: "You are a sales assistant." });
 const { text } = await agent.run("Hi!");
 ```
 

@@ -13,7 +13,7 @@ name (e.g. `support-triage`) — if empty, ask for one.
 - **Where**: a new subdirectory `./<name>/`, or a single file dropped into the
   current project?
 - **Model ref**: a namespaced `diva/<family>/<model>` ref, e.g.
-  `diva/deepseek/deepseek-v4-flash` or `diva/gpt/gpt-4o-mini`. If the user doesn't
+  `diva/deepseek/deepseek-v4-flash` or `diva/deepseek/deepseek-v4-flash`. If the user doesn't
   know, say the authoritative live list is `GET /v1/models` on the platform (the
   bundled `platform` MCP can list agents/usage but model listing is a plain API
   call) and default to `diva/deepseek/deepseek-v4-flash` unless told otherwise.
@@ -40,7 +40,7 @@ Ground truth as of this plugin's authoring (cross-check, don't blindly trust):
 ```ts
 import { Agent } from "@diva-ai/sdk";
 
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   instructions: "…",
 });
 
@@ -58,7 +58,7 @@ import asyncio
 from diva_ai import Agent
 
 async def main() -> None:
-    agent = Agent("diva/gpt/gpt-4o-mini", instructions="…")  # needs DIVA_API_KEY
+    agent = Agent("diva/deepseek/deepseek-v4-flash", instructions="…")  # needs DIVA_API_KEY
     try:
         result = await agent.run("…")
         print(result.text)

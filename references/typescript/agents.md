@@ -17,7 +17,7 @@ platform-namespaced model and the turn can never escape the gateway.
 ```ts
 import { Agent } from "@diva-ai/sdk";
 
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   instructions: "You are a terse, friendly assistant.",
 });
 ```
@@ -25,8 +25,8 @@ const agent = new Agent("diva/gpt/gpt-4o-mini", {
 `new Agent(model, options?)`:
 
 - `model` (`string`, required) — the platform model ref, e.g.
-  `"diva/gpt/gpt-4o-mini"`. An empty/blank model throws
-  `Agent: a model id is required (e.g. "diva/gpt/gpt-4o-mini")` at construction.
+  `"diva/deepseek/deepseek-v4-flash"`. An empty/blank model throws
+  `Agent: a model id is required (e.g. "diva/deepseek/deepseek-v4-flash")` at construction.
 - `options` (`AgentOptions`, default `{}`) — see the table below.
 
 The constructor validates eagerly: bad `compaction`, `thinkingDefault`, or
@@ -41,7 +41,6 @@ splits on the **first** `/`:
 
 | Ref | provider | model (engine-relative id) |
 | --- | --- | --- |
-| `"diva/gpt/gpt-4o-mini"` | `diva` | `gpt/gpt-4o-mini` |
 | `"diva/deepseek/deepseek-v4-flash"` | `diva` | `deepseek/deepseek-v4-flash` |
 | `"gpt-4o-mini"` (no namespace) | — | — |
 
@@ -52,7 +51,7 @@ namespace (e.g. `"gpt-4o-mini"`) is rejected with a `DivaError`:
 
 ```
 Agent model "gpt-4o-mini" is missing its platform namespace. Use the full
-platform ref from GET /v1/models (e.g. "diva/gpt/gpt-4o-mini").
+platform ref from GET /v1/models (e.g. "diva/deepseek/deepseek-v4-flash").
 ```
 
 Always use the full ref from `GET /v1/models`. See
@@ -102,7 +101,7 @@ Per-turn options accepted by `run()`, `stream()`, and `generate()`:
 | --- | --- | --- | --- |
 | `sessionId` | `string` | — | Conversation id for multi-turn continuity: successive turns with the same id share history. Omit for a stateless turn. `generate()` reads it only to keep its own retry in one session — it never joins run/stream history (see [Structured output](./structured-output.md)). |
 | `timeoutMs` | `number` | client's `requestTimeoutMs` | Per-turn timeout for THIS call only — e.g. a short bound on one item in a batch. |
-| `model` | `string` | the Agent's model | Per-turn model override (a full platform ref, e.g. `"diva/gpt/gpt-4o-mini"`); the namespace is still required. |
+| `model` | `string` | the Agent's model | Per-turn model override (a full platform ref, e.g. `"diva/deepseek/deepseek-v4-flash"`); the namespace is still required. |
 
 ## Call methods
 
@@ -206,7 +205,7 @@ this agent created it** (i.e. no explicit `client` was passed). Always call it i
 `finally` block so the connection closes cleanly:
 
 ```ts
-const agent = new Agent("diva/gpt/gpt-4o-mini");
+const agent = new Agent("diva/deepseek/deepseek-v4-flash");
 try {
   const { text } = await agent.run("Hello!");
   console.log(text);
@@ -236,7 +235,7 @@ const getWeather = tool({
   },
 });
 
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   instructions: "You are a travel assistant. Use tools when asked about weather.",
   tools: [getWeather],
   params: { temperature: 0.2, maxTokens: 400 },

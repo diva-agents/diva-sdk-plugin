@@ -197,7 +197,7 @@ class Lead(BaseModel):
 
 
 async def main() -> None:
-    agent = Agent("diva/gpt/gpt-4o-mini")
+    agent = Agent("diva/deepseek/deepseek-v4-flash")
     try:
         result = await agent.generate(
             "Email: 'Hi, I'm Ada (ada@example.com) — I'd like to buy 10 licenses.' "

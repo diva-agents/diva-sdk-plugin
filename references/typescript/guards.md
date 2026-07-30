@@ -206,7 +206,7 @@ guard.approval(name: string, opts: {
 import { Agent, DivaGuardTripped, guard } from "@diva-ai/sdk";
 
 async function main(): Promise<void> {
-  const agent = new Agent("diva/gpt/gpt-4o-mini", {
+  const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
     instructions: "Answer briefly.",
     guards: [
       // Reject a reply that is too long or names a banned topic (hard abort).
@@ -261,7 +261,7 @@ const refund = tool({
 });
 
 async function main(): Promise<void> {
-  const agent = new Agent("diva/gpt/gpt-4o-mini", {
+  const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
     instructions: "You are a support agent. Use the refund tool to issue refunds.",
     tools: [refund],
     guards: [

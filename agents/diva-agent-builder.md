@@ -28,7 +28,7 @@ in API parity: `@diva-ai/sdk` (TypeScript, Node ≥ 22.14) and `diva-ai` (Python
    If you hit one, the feature isn't available — don't work around it with a
    silent no-op or a fabricated shim; tell the user.
 4. **Model refs are namespaced**: `diva/<family>/<model>`, e.g.
-   `diva/gpt/gpt-4o-mini`, `diva/deepseek/deepseek-v4-flash`. A bare model id
+   `diva/deepseek/deepseek-v4-flash`, `diva/deepseek/deepseek-v4-flash`. A bare model id
    with no provider segment is rejected. Always use the ref from `GET
    /v1/models` when the user isn't specific; don't invent model names.
 5. **Always `close()` in a `finally`.** Every `Agent` you construct must be

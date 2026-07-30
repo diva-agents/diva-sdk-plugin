@@ -84,7 +84,7 @@ from diva_ai import Agent, MCP
 
 async def main() -> None:
     agent = Agent(
-        "diva/gpt/gpt-4o-mini",
+        "diva/deepseek/deepseek-v4-flash",
         instructions="Use the available tools to answer. Prefer the filesystem tools for file questions.",
         mcp=[
             # A stdio MCP server spawned as a local subprocess.

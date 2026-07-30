@@ -125,7 +125,7 @@ const Lead = z.object({
 });
 
 async function main(): Promise<void> {
-  const agent = new Agent("diva/gpt/gpt-4o-mini");
+  const agent = new Agent("diva/deepseek/deepseek-v4-flash");
 
   try {
     const { output, text, runId } = await agent.generate(

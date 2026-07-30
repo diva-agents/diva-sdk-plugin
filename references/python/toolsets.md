@@ -96,7 +96,7 @@ async def main() -> None:
     ops = toolset("ops", [deploy_tool])
 
     agent = Agent(
-        "diva/gpt/gpt-4o-mini",
+        "diva/deepseek/deepseek-v4-flash",
         instructions="Use the available tools to fulfil the request. Report what you did.",
         toolsets=[crm, ops],
     )
@@ -125,7 +125,7 @@ ops = toolset("ops", [deploy_tool])
 # One flat, collision-checked list — order preserved (crm's tools, then ops').
 all_tools = compose_toolsets([crm, ops])
 
-agent = Agent("diva/gpt/gpt-4o-mini", tools=all_tools)
+agent = Agent("diva/deepseek/deepseek-v4-flash", tools=all_tools)
 ```
 
 ## API

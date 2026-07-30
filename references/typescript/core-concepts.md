@@ -19,12 +19,12 @@ There are two ways in:
 import { Agent, DivaClient } from "@diva-ai/sdk";
 
 // High-level: implicit client
-const agent = new Agent("diva/gpt/gpt-4o-mini");
+const agent = new Agent("diva/deepseek/deepseek-v4-flash");
 
 // Advanced: explicit client, shared across agents
 const client = new DivaClient({ apiKey: process.env.DIVA_API_KEY });
-const support = new Agent("diva/gpt/gpt-4o-mini", { client, instructions: "Support." });
-const sales = new Agent("diva/gpt/gpt-4o-mini", { client, instructions: "Sales." });
+const support = new Agent("diva/deepseek/deepseek-v4-flash", { client, instructions: "Support." });
+const sales = new Agent("diva/deepseek/deepseek-v4-flash", { client, instructions: "Sales." });
 ```
 
 ## Where the engine runs
@@ -77,7 +77,7 @@ Practically: you authenticate once (`DIVA_API_KEY`), and choose models by their 
 A model is named `provider/model`:
 
 ```
-diva/gpt/gpt-4o-mini
+diva/deepseek/deepseek-v4-flash
 │    └──────────────┘
 │         model id (provider-relative)
 └── platform provider
@@ -85,7 +85,7 @@ diva/gpt/gpt-4o-mini
 
 The first segment (`diva`) is the **platform namespace** and is required — a bare model id (no
 slash) is rejected at construction, because it could escape the platform routing. The engine
-addresses the model by the stripped id (`gpt/gpt-4o-mini`) under that provider; the `diva/` prefix
+addresses the model by the stripped id (`deepseek/deepseek-v4-flash`) under that provider; the `diva/` prefix
 is re-attached on the wire by the platform provider. You just pass the full reference.
 
 ## Sessions

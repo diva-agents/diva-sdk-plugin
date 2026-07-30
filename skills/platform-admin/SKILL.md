@@ -112,13 +112,13 @@ are **not bugs** — they mean a feature isn't configured on that deployment:
 
 ## Key setup — and the DUAL-KEY reality
 
-The `platform` MCP authenticates with the plugin's **`diva_api_key`** user-config
+The `platform` MCP authenticates with the plugin's **`diva_mcp_key`** user-config
 value, sent as `Authorization: Bearer sk-diva-…`. Set it once in the plugin config
 and the MCP tools work.
 
 **But that config feeds the MCP header ONLY.** If you *also* run Diva SDK code in the
 same project, the SDK reads its key from **`DIVA_API_KEY`** in the shell / `.env`
-(see the `diva-sdk` skill) — the plugin's `diva_api_key` does not populate it. Two
+(see the `diva-sdk` skill) — the plugin's `diva_mcp_key` does not populate it. Two
 places, same `sk-diva-…` value: set both, or the MCP tools work while your SDK `run()`
 fails with `DivaAuthError` (or vice-versa).
 

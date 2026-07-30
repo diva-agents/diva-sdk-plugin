@@ -8,11 +8,11 @@ is a normal Agent you construct and own. Pass the handoff via the parent's
 `tools`:
 
 ```ts
-const qualifier = new Agent("diva/gpt/gpt-4o-mini", {
+const qualifier = new Agent("diva/deepseek/deepseek-v4-flash", {
   instructions: "Qualify the lead in one line.",
   clientOptions: { apiKey },
 });
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   tools: [handoff(qualifier, { name: "qualifier", description: "Qualify an inbound lead" })],
   clientOptions: { apiKey },
 });

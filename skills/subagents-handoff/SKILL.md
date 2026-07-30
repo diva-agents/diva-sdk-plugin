@@ -24,11 +24,11 @@ graph or orchestration DSL.
 // TypeScript
 import { Agent, handoff } from "@diva-ai/sdk";
 
-const qualifier = new Agent("diva/gpt/gpt-4o-mini", {
+const qualifier = new Agent("diva/deepseek/deepseek-v4-flash", {
   instructions: "You score sales leads. Reply with a one-line score and reason.",
 });
 
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   instructions: "For sales leads, call transfer_to_qualifier and relay its score.",
   tools: [handoff(qualifier, { name: "qualifier", description: "Qualify an inbound sales lead." })],
 });

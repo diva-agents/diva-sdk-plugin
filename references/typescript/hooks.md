@@ -129,7 +129,7 @@ const getBalance = tool({
   execute: async ({ userId }) => ({ userId, balance: 4212 }),
 });
 
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   instructions: "You are a terse banking assistant. Use tools for balances.",
   tools: [getBalance],
   hooks: {

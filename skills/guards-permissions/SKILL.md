@@ -35,7 +35,7 @@ async function canUseTool(toolName: string, input: Record<string, unknown>): Pro
   return { behavior: "allow" };
 }
 
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   builtinTools: { codeExec: "sandbox" },   // self-host only — makes `exec` available
   permissions: { canUseTool, allow: ["read"], approvalTimeoutMs: 300_000 },
 });
@@ -51,7 +51,7 @@ async def can_use_tool(tool_name: str, params: dict) -> dict:
     return {"behavior": "allow"}
 
 agent = Agent(
-    "diva/gpt/gpt-4o-mini",
+    "diva/deepseek/deepseek-v4-flash",
     tools=[exec_tool, weather_tool],
     permissions=Permissions(can_use_tool=can_use_tool, allow=["get_weather"]),
 )
@@ -99,7 +99,7 @@ callback. Only meaningful alongside `canUseTool`/`can_use_tool`.
 // TypeScript
 import { Agent, DivaGuardTripped, guard } from "@diva-ai/sdk";
 
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   guards: [
     guard.output({ maxChars: 500, blocklist: ["password", "secret key"] }),
     guard.tool("refund", { when: (i) => (i as { amount: number }).amount > 100 }),

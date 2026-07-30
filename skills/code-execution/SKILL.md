@@ -69,7 +69,7 @@ const runPython = tool({
   execute: async ({ code }) => runInYourOwnSandbox(code),
 });
 
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   instructions: "Compute by calling run_python — never do arithmetic yourself.",
   tools: [runPython],
   // Gate it: permissions.canUseTool (fail-closed) and/or a guard.tool substring block.
@@ -97,7 +97,7 @@ async def run_python(inp: RunPythonInput) -> dict:
 async def can_use_tool(name: str, args: dict) -> dict:
     return {"behavior": "allow"} if name == "run_python" else {"behavior": "deny", "message": "no"}
 
-agent = Agent("diva/gpt/gpt-4o-mini",
+agent = Agent("diva/deepseek/deepseek-v4-flash",
     tools=[tool(name="run_python", description="Run a short Python snippet.",
                 input_schema=RunPythonInput, execute=run_python)],
     permissions=Permissions(can_use_tool=can_use_tool))

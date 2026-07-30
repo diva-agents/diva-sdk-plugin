@@ -108,7 +108,7 @@ async def main() -> None:
     # Missing key -> DivaAuthError, but only once a turn actually starts;
     # construction itself does not check for a key.
     saved_key = os.environ.pop("DIVA_API_KEY", None)
-    no_key_agent = Agent("diva/gpt/gpt-4o-mini")  # construction succeeds
+    no_key_agent = Agent("diva/deepseek/deepseek-v4-flash")  # construction succeeds
     try:
         await no_key_agent.run("hello")
     except DivaAuthError as err:
@@ -117,7 +117,7 @@ async def main() -> None:
         if saved_key is not None:
             os.environ["DIVA_API_KEY"] = saved_key
 
-    agent = Agent("diva/gpt/gpt-4o-mini")
+    agent = Agent("diva/deepseek/deepseek-v4-flash")
     try:
         result = await agent.run("hello")
         print(result.text)
@@ -226,7 +226,7 @@ async def run_with_retry(agent: Agent, message: str, attempts: int) -> str:
   `final_reply_guard` (i.e. `guard.input`, `guard.output`, `guard.custom`) —
   raise `DivaGuardTripped` to you.
 - **`DivaAuthError` for a missing key is lazy, not eager.**
-  `Agent("diva/gpt/gpt-4o-mini")` with no `DIVA_API_KEY` set constructs
+  `Agent("diva/deepseek/deepseek-v4-flash")` with no `DIVA_API_KEY` set constructs
   successfully; the error only surfaces on the first `run()` / `stream()` /
   `generate()` call, because that's when the `Agent` first opens a gateway
   connection.

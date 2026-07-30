@@ -145,7 +145,7 @@ def agent_end(ev):
 
 async def main() -> None:
     agent = Agent(
-        "diva/gpt/gpt-4o-mini",
+        "diva/deepseek/deepseek-v4-flash",
         instructions="You are a terse banking assistant. Use tools for balances.",
         tools=[get_balance],
         hooks=Hooks(

@@ -154,7 +154,7 @@ async function canUseTool(
 }
 
 async function main(): Promise<void> {
-  const agent = new Agent("diva/gpt/gpt-4o-mini", {
+  const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
     instructions: "You are a shell operator. Use exec to run commands.",
     builtinTools: { codeExec: "sandbox" }, // makes `exec` available
     permissions: {
@@ -185,7 +185,7 @@ import { Agent } from "@diva-ai/sdk";
 
 // Read-only explorer: engine built-ins that mutate are denied by the `plan` preset,
 // and web_fetch is stripped from the model's context entirely.
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   instructions: "Explore the workspace and summarize it. Do not modify anything.",
   builtinTools: { fileOps: "workspace" },
   permissions: {

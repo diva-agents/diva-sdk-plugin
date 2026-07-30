@@ -34,7 +34,7 @@ to the provider as-is.
 ```ts
 import { Agent } from "@diva-ai/sdk";
 
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   // maxTokens is a HARD output cap (finish_reason "length"); temperature lowers randomness.
   params: { maxTokens: 400, temperature: 0.2 },
 });
@@ -95,7 +95,7 @@ Values are validated at construction; an out-of-range value throws `DivaError` i
 | `recentTurnsPreserve` | `number` (integer) | 0–12 | — | Most-recent user/assistant turns kept verbatim in the summary. |
 | `maxHistoryShare` | `number` | 0.1–0.9 | `0.5` | Max share of the context window kept for history during pruning. |
 | `qualityGuard` | `{ enabled?: boolean; maxRetries?: number }` | `maxRetries` ≥ 0 (integer) | — | Audit the summary and regenerate on failure (adds latency + cost). |
-| `model` | `string` | — | agent's primary model | A cheaper/faster model for the summarization pass, e.g. `"diva/gpt/gpt-4o-mini"`. |
+| `model` | `string` | — | agent's primary model | A cheaper/faster model for the summarization pass, e.g. `"diva/deepseek/deepseek-v4-flash"`. |
 | `notifyUser` | `boolean` | — | `false` (silent) | Emit a "🧹 Compacting context…" notice as a text chunk in the reply. |
 
 ```ts
@@ -103,7 +103,7 @@ const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   compaction: {
     recentTurnsPreserve: 4,       // keep the last 4 turns verbatim
     maxHistoryShare: 0.4,         // give history at most 40% of the window
-    model: "diva/gpt/gpt-4o-mini", // summarize with a cheaper model
+    model: "diva/deepseek/deepseek-v4-flash", // summarize with a cheaper model
     customInstructions: "Reply in the customer's language; keep every open action item.",
     notifyUser: true,             // surfaces as a text chunk in run()/stream()
   },
@@ -156,14 +156,14 @@ const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
 import { Agent } from "@diva-ai/sdk";
 
 async function main(): Promise<void> {
-  const agent = new Agent("diva/gpt/gpt-4o-mini", {
+  const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
     // Cap length + steer sampling; parallel_tool_calls is OpenAI-scoped.
     params: { maxTokens: 400, temperature: 0.2, parallel_tool_calls: false },
     thinkingDefault: "low",
     compaction: {
       recentTurnsPreserve: 4,
       maxHistoryShare: 0.4,
-      model: "diva/gpt/gpt-4o-mini",
+      model: "diva/deepseek/deepseek-v4-flash",
       customInstructions: "Keep the customer's language and any open action items.",
     },
     onCompaction: (e) => console.log(`[compaction ${e.phase}] run=${e.runId}`),

@@ -69,7 +69,7 @@ commented remote HTTP server.
 import { Agent, MCP } from "@diva-ai/sdk";
 
 async function main(): Promise<void> {
-  const agent = new Agent("diva/gpt/gpt-4o-mini", {
+  const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
     instructions: "Use the available tools to answer. Prefer the filesystem tools for file questions.",
     mcp: [
       // A stdio MCP server spawned as a local subprocess.

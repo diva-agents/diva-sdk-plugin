@@ -36,7 +36,7 @@ const weather = toolset("weather", [getWeather]);
 
 // Tool-bearing agents own their host — configure the implicit client via clientOptions,
 // never pass a shared `client` alongside `tools`/`toolsets`.
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   instructions: "Answer weather questions by calling get_weather.",
   toolsets: [weather],
 });

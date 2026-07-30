@@ -22,7 +22,7 @@ from diva_ai import Agent
 
 async def main() -> None:
     # High-level: implicit client, created lazily on the first turn
-    agent = Agent("diva/gpt/gpt-4o-mini")
+    agent = Agent("diva/deepseek/deepseek-v4-flash")
     result = await agent.run("Hello!")
     print(result.text)
     await agent.close()
@@ -103,7 +103,7 @@ models by their platform reference.
 A model is named `provider/model`:
 
 ```
-diva/gpt/gpt-4o-mini
+diva/deepseek/deepseek-v4-flash
 │    └──────────────┘
 │         model id (provider-relative)
 └── platform provider
@@ -111,15 +111,15 @@ diva/gpt/gpt-4o-mini
 
 `split_model_ref()` splits on the **first** `/`, returning `(provider, model)`.
 The first segment (`diva`) is the **platform namespace**; the engine addresses
-the model by the stripped id (`gpt/gpt-4o-mini`) under that provider. You just
+the model by the stripped id (`deepseek/deepseek-v4-flash`) under that provider. You just
 pass the full reference:
 
 ```python
 from diva_ai import Agent, split_model_ref
 
-split_model_ref("diva/gpt/gpt-4o-mini")  # -> ("diva", "gpt/gpt-4o-mini")
+split_model_ref("diva/deepseek/deepseek-v4-flash")  # -> ("diva", "deepseek/deepseek-v4-flash")
 
-agent = Agent("diva/gpt/gpt-4o-mini")
+agent = Agent("diva/deepseek/deepseek-v4-flash")
 ```
 
 `Agent(model)` rejects a blank/whitespace-only ref at construction with a

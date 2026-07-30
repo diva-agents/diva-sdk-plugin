@@ -124,7 +124,7 @@ import asyncio
 from diva_ai import Agent
 
 async def main() -> None:
-    agent = Agent("diva/gpt/gpt-4o-mini", instructions="Answer briefly.")
+    agent = Agent("diva/deepseek/deepseek-v4-flash", instructions="Answer briefly.")
     try:
         chat = agent.session()  # a fresh conversation (random id)
 
@@ -150,7 +150,7 @@ from diva_ai import Agent, FileStore
 
 async def main() -> None:
     agent = Agent(
-        "diva/gpt/gpt-4o-mini",
+        "diva/deepseek/deepseek-v4-flash",
         instructions="You are a concise assistant.",
         # History lives in ./conversations/<hash>.json — a fresh process resumes it.
         store=FileStore("./conversations", max_turns=50),
@@ -187,7 +187,7 @@ class DictStore:
         self._db.pop(session_id, None)
 
 store: SessionStore = DictStore()  # isinstance(store, SessionStore) is True
-agent = Agent("diva/gpt/gpt-4o-mini", store=store)
+agent = Agent("diva/deepseek/deepseek-v4-flash", store=store)
 ```
 
 `load`/`append`/`clear` may each be sync or async (`Awaitable[...]`

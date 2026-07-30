@@ -30,7 +30,7 @@ export DIVA_API_KEY=sk-diva-...
 Or pass it explicitly (useful for multi-tenant servers that hold several keys):
 
 ```ts
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   clientOptions: { apiKey: process.env.MY_TENANT_KEY },
 });
 ```
@@ -50,7 +50,7 @@ rest is the model id.
 import { Agent } from "@diva-ai/sdk";
 
 async function main() {
-  const agent = new Agent("diva/gpt/gpt-4o-mini", {
+  const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
     instructions: "You are a terse, friendly assistant.",
   });
 
@@ -111,7 +111,7 @@ const getWeather = tool({
   execute: async ({ city }) => ({ tempC: 21, city }),
 });
 
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   instructions: "Use tools to answer questions about the weather.",
   tools: [getWeather],
 });

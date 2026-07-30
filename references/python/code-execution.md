@@ -40,7 +40,7 @@ package's surface to begin with.
   ```python
   from diva_ai import Agent, Permissions
 
-  Agent("diva/gpt/gpt-4o-mini", permissions=Permissions(mode="bypassPermissions"))
+  Agent("diva/deepseek/deepseek-v4-flash", permissions=Permissions(mode="bypassPermissions"))
   # DivaNotImplementedError: permissions.mode/deny target ENGINE built-ins,
   # which the thin/hosted client does not expose. Use can_use_tool (+ allow)
   # to gate your own client tools.
@@ -109,7 +109,7 @@ async def can_use_tool(name: str, args: dict) -> dict:
 
 
 agent = Agent(
-    "diva/gpt/gpt-4o-mini",
+    "diva/deepseek/deepseek-v4-flash",
     instructions=(
         "You have a run_python tool that executes short Python snippets. "
         "When asked to compute something, WRITE and RUN code with run_python "
@@ -166,7 +166,7 @@ synchronous check layered in front of (or instead of) an async
 from diva_ai import Agent, guard
 
 agent = Agent(
-    "diva/gpt/gpt-4o-mini",
+    "diva/deepseek/deepseek-v4-flash",
     tools=[run_python_tool],
     guards=[
         guard.tool(
@@ -201,7 +201,7 @@ def get_badge_number(_: GetBadgeInput) -> dict:
 
 
 agent = Agent(
-    "diva/gpt/gpt-4o-mini",
+    "diva/deepseek/deepseek-v4-flash",
     instructions="Answer using get_badge_number; never invent a number.",
     tools=[
         tool(

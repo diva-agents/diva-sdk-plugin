@@ -13,9 +13,9 @@ If none exists, suggest `/diva:new-agent` first.
 
 If what's being wired is actually this **plugin's own bundled platform MCP**
 (the `platform` server in this plugin's `.mcp.json`, auth'd via the
-`diva_api_key` plugin setting) rather than a new server for the *agent's own*
+`diva_mcp_key` plugin setting) rather than a new server for the *agent's own*
 code — stop here and redirect: that MCP is already available to *you* (the
-assistant) once `diva_api_key` is set; it's for operating what you build
+assistant) once `diva_mcp_key` is set; it's for operating what you build
 (agents/channels/CRM/sessions), not something you attach inside agent code with
 `MCP.stdio`/`MCP.http`. Use `/diva:deploy` or `/diva:debug-session` instead.
 
@@ -51,7 +51,7 @@ TS's attached servers). Before wiring:
 ```ts
 import { Agent, MCP } from "@diva-ai/sdk";
 
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   mcp: [
     MCP.stdio("filesystem", "npx", { args: ["-y", "@modelcontextprotocol/server-filesystem", process.cwd()] }),
     // MCP.http("weather", "https://mcp.example.com/mcp", { headers: { Authorization: `Bearer ${token}` } }),
@@ -64,7 +64,7 @@ const agent = new Agent("diva/gpt/gpt-4o-mini", {
 from diva_ai import Agent, MCP
 
 agent = Agent(
-    "diva/gpt/gpt-4o-mini",
+    "diva/deepseek/deepseek-v4-flash",
     mcp=[
         MCP.stdio("filesystem", "npx", args=["-y", "@modelcontextprotocol/server-filesystem", "."]),
         # MCP.http("weather", "https://mcp.example.com/mcp", headers={"Authorization": f"Bearer {token}"}),

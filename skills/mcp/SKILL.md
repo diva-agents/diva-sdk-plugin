@@ -23,7 +23,7 @@ TypeScript (`@diva-ai/sdk`):
 ```ts
 import { Agent, MCP } from "@diva-ai/sdk";
 
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   instructions: "Prefer the filesystem tools for file questions.",
   mcp: [
     MCP.stdio("filesystem", "npx", {
@@ -44,7 +44,7 @@ Python (`diva-ai[mcp]` extra required: `pip install 'diva-ai[mcp]'`):
 from diva_ai import Agent, MCP
 
 agent = Agent(
-    "diva/gpt/gpt-4o-mini",
+    "diva/deepseek/deepseek-v4-flash",
     instructions="Prefer the filesystem tools for file questions.",
     mcp=[
         MCP.stdio("filesystem", "npx",

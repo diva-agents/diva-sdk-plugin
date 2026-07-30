@@ -86,7 +86,7 @@ weather_tool = tool(name="get_weather", description="Get weather for a city.",
                      input_schema=CityInput, execute=lambda i: {"tempC": 20})
 
 agent = Agent(
-    "diva/gpt/gpt-4o-mini",
+    "diva/deepseek/deepseek-v4-flash",
     instructions="You are a shell operator with a weather tool.",
     tools=[exec_tool, weather_tool],
     permissions=Permissions(

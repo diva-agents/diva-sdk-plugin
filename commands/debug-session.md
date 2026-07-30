@@ -10,7 +10,7 @@ Inspect a Diva session/run on the platform using the bundled platform MCP.
 
 Confirm the platform MCP is reachable — look for `mcp__platform__*` tools
 (`ToolSearch` with `"platform"` if they're deferred). If none are visible, stop
-and tell the user to set `diva_api_key` for this plugin first.
+and tell the user to set `diva_mcp_key` for this plugin first.
 
 ## 2. Discover the real tools — do not assume names
 

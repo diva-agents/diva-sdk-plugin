@@ -46,7 +46,7 @@ DivaError
   in the constructor — or the self-host-only `builtinTools` / `permissions.mode` / `deny`).
 - **At the start of a turn** (`run()` / `stream()` / `generate()`): `DivaNotImplementedError`
   (`knowledge` / RAG); `DivaError` (a model ref missing its platform namespace, e.g. `"gpt-5"`
-  instead of `"diva/gpt/gpt-4o-mini"`).
+  instead of `"diva/deepseek/deepseek-v4-flash"`).
 - **During a turn**: `DivaHostError` (the gateway could not be reached); `DivaRequestError`
   (gateway/turn failure, timeout, or an unrecoverable mid-stream drop); `DivaGuardTripped` (a
   turn-level guard or hook block); `DivaHookError` (a hook threw or returned a bad `replace`).
@@ -88,13 +88,13 @@ import { Agent, DivaAuthError, DivaHostError, DivaRequestError } from "@diva-ai/
 try {
   const saved = process.env.DIVA_API_KEY;
   delete process.env.DIVA_API_KEY;
-  new Agent("diva/gpt/gpt-4o-mini");
+  new Agent("diva/deepseek/deepseek-v4-flash");
   if (saved) process.env.DIVA_API_KEY = saved;
 } catch (err) {
   if (err instanceof DivaAuthError) console.log("no key ->", err.message);
 }
 
-const agent = new Agent("diva/gpt/gpt-4o-mini");
+const agent = new Agent("diva/deepseek/deepseek-v4-flash");
 try {
   await agent.run("hello");
 } catch (err) {

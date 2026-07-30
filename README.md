@@ -9,7 +9,7 @@ Diva SDK agents are a **thin client**: `Agent(model, ...)` opens a WebSocket to
 a remote Diva gateway and the model loop, tool orchestration, and compaction
 all run **server-side**. Auth is a single bearer `sk-diva-…` key — there's no
 bring-your-own-provider and no local engine to run. Model refs are namespaced
-`diva/<family>/<model>` (e.g. `diva/gpt/gpt-4o-mini`), and the Python and
+`diva/<family>/<model>` (e.g. `diva/deepseek/deepseek-v4-flash`), and the Python and
 TypeScript clients speak the same gateway protocol with byte-identical session
 keys, so a conversation can be resumed from either.
 
@@ -30,22 +30,24 @@ install alone:
 /plugin enable diva-sdk
 ```
 
-### Set your API key
+### Set your keys
 
-The plugin needs one setting, `diva_api_key` — your Diva platform key
-(`sk-diva-…`), marked sensitive in the manifest. **It is used in two separate
-places:**
+The plugin and the SDK use **two different `sk-diva-…` keys** — they are not
+interchangeable:
 
-- **The platform MCP** reads it directly from plugin config as its bearer
-  token — set it and the MCP tools work.
-- **The SDK itself** (when you run agents) reads `DIVA_API_KEY` from your own
-  shell/`.env`. The plugin config does **not** export it, so set the same value
-  there too — e.g. `export DIVA_API_KEY=sk-diva-…`. Otherwise SDK runs throw
-  `DivaAuthError`.
+- **`diva_mcp_key`** (plugin setting, marked sensitive) — the bearer for the
+  bundled platform MCP. Issue it from your Diva workspace → **Developers → MCP
+  keys**; it carries MCP scope. An ordinary SDK/inference key here is rejected
+  with `401`. You're prompted for it when you enable the plugin, or set it any
+  time via `/plugin`.
+- **`DIVA_API_KEY`** (your own shell/`.env`) — the SDK/inference key the agents
+  you run read at runtime. Get it from **Developers → SDK** and
+  `export DIVA_API_KEY=sk-diva-…`. The plugin config does **not** export it, so
+  SDK runs throw `DivaAuthError` without it.
 
-Get it from your Diva workspace → **Developers → SDK**, then set it through
-Claude Code's plugin settings for `diva-sdk` (you'll be prompted for it when you
-enable the plugin, or set it any time via `/plugin`).
+By default the MCP targets the production gateway. To test against another
+stand, set **`diva_mcp_url`** in the plugin settings (e.g.
+`https://api.dev.diva-soft.ru/mcp/platform-admin/mcp`).
 
 ## What's inside
 
@@ -73,9 +75,9 @@ enable the plugin, or set it any time via `/plugin`).
   | `diva-mcp-integrator` | Wires MCP servers into an agent, including the platform/external distinction and each SDK's owns-host and secrets rules. |
   | `diva-sdk-verifier` | Read-only review of Diva SDK code for correctness — traffic-lock, fail-loud vs. silent fallback, snake_case/camelCase, owns-host conflicts — split-aware of Python vs. TypeScript. |
 
-- **MCP** — the `platform` server (`.mcp.json`,
+- **MCP** — the `platform` server (`.mcp.json`, at `diva_mcp_url` — default
   `https://api.diva-ai.ru/mcp/platform-admin/mcp`), authenticated with your
-  `diva_api_key`. Its 12 tools let you confirm your identity (`whoami`),
+  `diva_mcp_key`. Its 12 tools let you confirm your identity (`whoami`),
   list/get/create/update agents, set an agent's operating mode, inspect
   sessions & runs, watch usage, and list channels — all scoped to your org by
   the key (no cross-org access). The **`platform-admin`** skill documents every

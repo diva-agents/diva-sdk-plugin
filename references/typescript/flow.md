@@ -96,7 +96,7 @@ const orderFunnel = flow("order")
   .build();
 
 async function main(): Promise<void> {
-  const agent = new Agent("diva/gpt/gpt-4o-mini", {
+  const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
     instructions: "You take customer orders. Be brief.",
     tools: [setAddress, createOrder],
     flow: orderFunnel, // enforced by the flow gate (client-side in thin mode)

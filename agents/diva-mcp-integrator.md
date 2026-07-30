@@ -13,7 +13,7 @@ distinct kinds of MCP in play here — never conflate them:
    These are tools the *agent you're building* gets to call.
 2. **This plugin's bundled platform MCP** (server `platform` in the plugin's
    `.mcp.json`, `https://api.diva-ai.ru/mcp/platform-admin/mcp`, bearer-authed
-   via the `diva_api_key` plugin setting). This is a set of tools available to
+   via the `diva_mcp_key` plugin setting). This is a set of tools available to
    *you* (the assistant) for operating agents/sessions/runs on the platform —
    it is not something you attach inside an agent's own `mcp` list. If asked to
    "wire platform MCP into the agent," clarify and redirect to the operational

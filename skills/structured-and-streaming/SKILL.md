@@ -30,7 +30,7 @@ const Lead = z.object({
   intent: z.enum(["buy", "support", "other"]),
 });
 
-const agent = new Agent("diva/gpt/gpt-4o-mini");
+const agent = new Agent("diva/deepseek/deepseek-v4-flash");
 const { output, attempts, repaired } = await agent.generate(
   "Email: 'Hi, I'm Ada (ada@example.com) — I'd like to buy 10 licenses.' Extract the lead.",
   Lead,
@@ -50,7 +50,7 @@ class Lead(BaseModel):
     email: str
     intent: Literal["buy", "support", "other"]
 
-agent = Agent("diva/gpt/gpt-4o-mini")
+agent = Agent("diva/deepseek/deepseek-v4-flash")
 result = await agent.generate(
     "Email: 'Hi, I'm Ada (ada@example.com) — I'd like to buy 10 licenses.' Extract the lead.",
     Lead,

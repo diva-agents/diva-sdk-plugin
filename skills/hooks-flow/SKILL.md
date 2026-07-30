@@ -28,7 +28,7 @@ client-side):
 // TypeScript
 import { Agent, DivaGuardTripped } from "@diva-ai/sdk";
 
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   tools: [getBalance],
   hooks: {
     before_tool_call: (e) => console.log("[hook] tool call:", e.tool, e.input),
@@ -113,7 +113,7 @@ const orderFunnel = flow("order")
   .narrationGuard(["order placed"])
   .build();
 
-const agent = new Agent("diva/gpt/gpt-4o-mini", {
+const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
   tools: [setAddress, createOrder],
   flow: orderFunnel, // create_order is blocked until set_address fills `address`
 });
@@ -131,7 +131,7 @@ order_funnel = (
     .build()
 )
 
-agent = Agent("diva/gpt/gpt-4o-mini", tools=[set_address_tool, create_order_tool], flow=order_funnel)
+agent = Agent("diva/deepseek/deepseek-v4-flash", tools=[set_address_tool, create_order_tool], flow=order_funnel)
 ```
 
 `FlowBuilder` surface (same shape, snake_case in Python): `.slot(fillWhen/fill_when)`,
