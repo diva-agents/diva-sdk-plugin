@@ -1,6 +1,6 @@
 {
   "name": "diva-sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Build and manage AI agents on the Diva platform with the Diva SDK (Python & TypeScript) — ready-made skills, project scaffolds, and the Diva platform MCP wired in.",
   "author": { "name": "Diva" },
   "homepage": "https://front.dev.diva-ai.ru/ux/sdk-docs",
@@ -8,11 +8,13 @@
   "defaultEnabled": false,
   "userConfig": {
     "diva_mcp_key": {
+      "title": "Diva MCP key",
       "type": "string",
       "description": "MCP key (sk-diva-…) for the bundled Diva platform MCP server. Get it from Developers → MCP keys. IMPORTANT: this is a DIFFERENT key from the SDK/inference key you set as DIVA_API_KEY — it carries MCP scope. An ordinary SDK key here is rejected with 401. This plugin config is used ONLY as the MCP Bearer; it is not exported to your shell.",
       "sensitive": true
     },
     "diva_mcp_url": {
+      "title": "Diva MCP endpoint URL",
       "type": "string",
       "description": "Diva platform-admin MCP endpoint. Defaults to the production gateway; point it at a self-hosted / staging gateway (e.g. https://api.dev.diva-soft.ru/mcp/platform-admin/mcp) to test against that stand.",
       "default": "https://api.diva-ai.ru/mcp/platform-admin/mcp"
