@@ -26,7 +26,11 @@ in API parity: `@diva-ai/sdk` (TypeScript, Node ≥ 22.14) and `diva-ai` (Python
    `permissions.mode`/`deny` on the hosted client, a `platform:<name>` skill
    ref) raise a typed `DivaNotImplementedError` at construction or turn start.
    If you hit one, the feature isn't available — don't work around it with a
-   silent no-op or a fabricated shim; tell the user.
+   silent no-op or a fabricated shim; tell the user. One exception worth
+   knowing: `knowledge=` refuses the ARGUMENT, not the capability — the
+   knowledge base is reachable over HTTP today and its refusal names the
+   endpoints, so the honest answer there is "use these two calls", not "not
+   available".
 4. **Model refs are namespaced**: `diva/<family>/<model>`, e.g.
    `diva/deepseek/deepseek-v4-flash`, `diva/deepseek/deepseek-v4-flash`. A bare model id
    with no provider segment is rejected. Always use the ref from `GET

@@ -30,7 +30,10 @@ for the pinned SDK versions.
    `DivaNotImplementedError` — `permissions.mode`/`deny` and hosted `builtinTools`
    throw at construction (TS); `knowledge=` throws at construction in Python but at
    the first `run()` in TS. If you hit one, the feature isn't available yet — don't
-   work around it silently.
+   work around it silently. Read the message before concluding a capability is
+   missing: `knowledge=` refuses the ARGUMENT and points at the knowledge-base
+   HTTP API, which works today (`/api/v1/agi/sdk/kb/collections` + `/chunks`, and
+   the agent gets a search tool on its next turn).
 4. **Model refs are namespaced** `diva/<family>/<model>` — the platform routes
    them to the real backend. A per-turn override is `run(..., model=...)`.
 5. **Python ↔ TypeScript parity.** Both clients speak the same gateway protocol

@@ -94,3 +94,17 @@ Full SDK docs (Python & TypeScript, EN/RU) — always the source of truth, kept
 in sync with the code:
 
 **https://front.dev.diva-ai.ru/ux/sdk-docs**
+
+## Contributing
+
+Branch off `main`. Specs (`TZ.md`) and acceptance notes (`ACCEPTANCE.md`) live in
+`research/<date>-<name>/`, and a PR links to its spec.
+
+Nothing here compiles, so verification is an install and a live run: reinstall the
+plugin from scratch, then exercise the command, skill, or agent you touched **in a
+clean session** — the session you edited in already knows what you meant, and a
+user's session will not. Refresh `references/` with `node scripts/sync-docs.mjs`
+when the SDK API moves.
+
+The full team process — taking a task, shipping it with evidence, reviewing,
+filing work — is in [`PROCESS.md`](./PROCESS.md) (in Russian).

@@ -256,10 +256,12 @@ try {
   invocable `skills`, and tool-level hooks/guards each throw a `DivaError` at
   construction if combined with an explicit `client`. `onCompaction` throws with
   its own message directing you to set it on the shared client instead.
-- **`knowledge` fails loud.** Setting `knowledge` and then running a turn throws
-  `DivaNotImplementedError`: *"Agent knowledge (RAG) is not yet wired — the
-  platform /v1/kb API is a later increment."* The field exists so the surface is
-  stable; it is not yet functional.
+- **`knowledge` fails loud, and the refusal is a signpost.** Setting `knowledge`
+  and then running a turn throws `DivaNotImplementedError` naming the endpoints
+  that work today (`POST /api/v1/agi/sdk/kb/collections`, then
+  `/collections/{id}/chunks`) and the fact that a `byo` corpus reaches the agent
+  too — the platform indexes its text with its own embedder while your vectors
+  stay untouched. The option is not yet functional; the knowledge base is.
 - **Platform namespace required.** A model ref missing its provider segment is
   rejected at turn time — the SDK will not let a turn run outside the Diva gateway.
 - **Invocable-skills conflicts.** Because invocable skills pin the host workspace
