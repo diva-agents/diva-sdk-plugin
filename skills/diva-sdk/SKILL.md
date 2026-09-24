@@ -42,7 +42,7 @@ for the pinned SDK versions.
 
 ## Quick start
 
-Python (`pip install diva-ai`):
+Python (`pip install "diva-ai>=0.1.0a1"`):
 ```python
 import asyncio
 from diva_ai import Agent

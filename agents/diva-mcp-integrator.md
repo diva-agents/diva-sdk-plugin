@@ -27,7 +27,7 @@ the SDK connects when the agent's `mcp` option is set.
 
 | | TypeScript | Python |
 | --- | --- | --- |
-| Import | `import { MCP } from "@diva-ai/sdk"` | `from diva_ai import MCP` (needs `pip install 'diva-ai[mcp]'`) |
+| Import | `import { MCP } from "@diva-ai/sdk"` | `from diva_ai import MCP` (needs `pip install "diva-ai[mcp]>=0.1.0a1"`) |
 | stdio | `MCP.stdio(name, command, { args?, env?, cwd? })` | `MCP.stdio(name, command, args=None, env=None, cwd=None)` |
 | http | `MCP.http(name, url, { headers?, sse? })` | `MCP.http(name, url, headers=None, sse=False)` |
 | Name rule | `^[a-zA-Z][a-zA-Z0-9_-]*$`, letter-led | same regex |

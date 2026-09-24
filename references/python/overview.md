@@ -12,8 +12,8 @@ client can resume the same server-side conversation.
 ## Install
 
 ```bash
-pip install diva-ai            # core
-pip install 'diva-ai[mcp]'     # + external MCP servers
+pip install "diva-ai>=0.1.0a1"            # core
+pip install "diva-ai[mcp]>=0.1.0a1"       # + external MCP servers
 ```
 
 Requires Python ≥ 3.10. Depends only on `websockets` and `pydantic`.

@@ -39,7 +39,7 @@ const { text } = await agent.run("List the files in the current directory.");
 await agent.close();
 ```
 
-Python (`diva-ai[mcp]` extra required: `pip install 'diva-ai[mcp]'`):
+Python (`diva-ai[mcp]` extra required: `pip install "diva-ai[mcp]>=0.1.0a1"`):
 ```python
 from diva_ai import Agent, MCP
 

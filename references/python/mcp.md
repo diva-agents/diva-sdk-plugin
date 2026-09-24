@@ -7,7 +7,7 @@ remote server connected to over HTTP), then pass them to `Agent(mcp=[...])`.
 Requires the `diva-ai[mcp]` extra:
 
 ```bash
-pip install 'diva-ai[mcp]'
+pip install "diva-ai[mcp]>=0.1.0a1"
 ```
 
 This page is about **external** MCP servers — separate programs or remote
