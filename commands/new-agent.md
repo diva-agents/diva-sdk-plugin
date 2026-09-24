@@ -8,7 +8,7 @@ name (e.g. `support-triage`) — if empty, ask for one.
 
 ## 1. Interview (skip anything the user already told you)
 
-- **Language**: Python (`diva-ai`, `pip install diva-ai`, needs Python ≥ 3.10) or
+- **Language**: Python (`diva-ai`, `pip install "diva-ai>=0.1.0a1"`, needs Python ≥ 3.10) or
   TypeScript (`@diva-ai/sdk`, `npm i @diva-ai/sdk`, needs Node ≥ 22.14)?
 - **Where**: a new subdirectory `./<name>/`, or a single file dropped into the
   current project?
@@ -88,7 +88,11 @@ directory already has conflicting files — ask before overwriting).
 **Python layout**
 ```
 <name>/
-  pyproject.toml       # dependency diva-ai, requires-python >= 3.10 (add diva-ai[mcp] if MCP was requested)
+  pyproject.toml       # dependency "diva-ai>=0.1.0a1", requires-python >= 3.10
+                       # (use "diva-ai[mcp]>=0.1.0a1" if MCP was requested)
+                       # The specifier is REQUIRED: the SDK is published only as
+                       # a pre-release, and a bare "diva-ai" resolves to a 1.3 kB
+                       # placeholder, so the generated project fails on import.
   <name>.py             # the Agent + run()/close() from step 2, tailored to the interview
   .env.example
   .gitignore             # .env, __pycache__/, .venv
@@ -107,7 +111,7 @@ Write the source file with:
 
 ## 4. Install and verify
 
-Run the install command (`npm i` / `pip install -e .` or `pip install diva-ai`)
+Run the install command (`npm i` / `pip install -e .` or `pip install "diva-ai>=0.1.0a1"`)
 via Bash. Then:
 
 - If `DIVA_API_KEY` is set in the environment, offer to run the new agent's

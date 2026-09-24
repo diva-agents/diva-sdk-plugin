@@ -59,7 +59,7 @@ const agent = new Agent("diva/deepseek/deepseek-v4-flash", {
 });
 ```
 
-**Python** (needs the `diva-ai[mcp]` extra: `pip install 'diva-ai[mcp]'`)
+**Python** (needs the `diva-ai[mcp]` extra: `pip install "diva-ai[mcp]>=0.1.0a1"`)
 ```python
 from diva_ai import Agent, MCP
 
