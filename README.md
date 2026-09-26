@@ -1,6 +1,6 @@
 # diva-sdk (Claude Code plugin)
 
-Build and manage AI agents on the [Diva](https://front.dev.diva-ai.ru/ux/sdk-docs)
+Build and manage AI agents on the [Diva](https://diva-ai.ru)
 platform with the Diva SDK — `diva-ai` (Python) or `@diva-ai/sdk` (TypeScript) —
 without leaving Claude Code. This plugin bundles a set of SDK skills, seven slash
 commands, three specialist subagents, and the hosted Diva platform MCP server.
@@ -41,13 +41,18 @@ interchangeable:
   with `401`. You're prompted for it when you enable the plugin, or set it any
   time via `/plugin`.
 - **`DIVA_API_KEY`** (your own shell/`.env`) — the SDK/inference key the agents
-  you run read at runtime. Get it from **Developers → SDK** and
+  you run read at runtime. There is no separate "SDK" page: this is the key
+  issued on **Разработчикам → API** (Developers → API access, `/ux/api-keys`,
+  the page for the OpenAI-compatible `/v1` keys) — then
   `export DIVA_API_KEY=sk-diva-…`. The plugin config does **not** export it, so
   SDK runs throw `DivaAuthError` without it.
 
-By default the MCP targets the production gateway. To test against another
-stand, set **`diva_mcp_url`** in the plugin settings (e.g.
-`https://api.dev.diva-soft.ru/mcp/platform-admin/mcp`).
+By default both the MCP and the SDK target production. To test against the dev
+stand, point both at it — a dev key is rejected by production:
+
+- plugin setting **`diva_mcp_url`** = `https://api.dev.diva-soft.ru/mcp/platform-admin/mcp`;
+- SDK: `export DIVA_GATEWAY_URL=wss://api.dev.diva-soft.ru/gateway`
+  (the default is `wss://api.diva-ai.ru/gateway`).
 
 ## What's inside
 
@@ -93,7 +98,9 @@ stand, set **`diva_mcp_url`** in the plugin settings (e.g.
 Full SDK docs (Python & TypeScript, EN/RU) — always the source of truth, kept
 in sync with the code:
 
-**https://front.dev.diva-ai.ru/ux/sdk-docs**
+**https://diva-ai.ru/ux/sdk-docs** (in your Diva workspace, after login; dev
+stand: `https://dev.diva-soft.ru/ux/sdk-docs`). Without login the same content is
+served as JSON at `https://api.diva-ai.ru/v1/docs/{python|typescript}/latest?language=en`.
 
 ## Contributing
 

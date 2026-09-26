@@ -132,4 +132,4 @@ The shipped v1 surface is exactly the 12 tools above. Do not assume more:
 - Writes are only `create_agent`, `update_agent`, `set_operating_mode`. Everything
   else (`list_*`, `get_*`, `whoami`) is a safe read.
 
-Full SDK reference: https://front.dev.diva-ai.ru/ux/sdk-docs
+Full SDK reference: https://diva-ai.ru/ux/sdk-docs

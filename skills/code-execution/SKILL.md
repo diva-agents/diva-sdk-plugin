@@ -139,4 +139,4 @@ of this is reachable by passing `builtinTools` to `@diva-ai/sdk`.
 - **guards-permissions** — `canUseTool` / `guard.*` to gate a code-runner tool.
 - **deployment-and-errors** — hosted vs self-host targets and the `DivaError` hierarchy.
 - **diva-sdk** — the thin-client architecture (why the engine never runs locally).
-- Full docs: https://front.dev.diva-ai.ru/ux/sdk-docs
+- Full docs: https://diva-ai.ru/ux/sdk-docs

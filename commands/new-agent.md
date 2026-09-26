@@ -28,8 +28,8 @@ name (e.g. `support-triage`) — if empty, ask for one.
 
 The umbrella skill (`skills/diva-sdk/SKILL.md` in this plugin) says the docs are
 "always the source of truth, kept in sync with the code." Before generating
-anything, `WebFetch` **https://front.dev.diva-ai.ru/ux/sdk-docs** (and the
-language-specific getting-started/quickstart section under it) to confirm the
+anything, `WebFetch` the live docs bundle
+`https://api.diva-ai.ru/v1/docs/python/latest?language=en` (or `typescript`; public JSON, no login) and read its `overview` and `quickstart` pages to confirm the
 package name, install command, and `Agent` constructor shape below haven't
 drifted. If the fetch fails, fall back to the bundled skill doc and say so
 explicitly in your summary — don't silently proceed on stale assumptions.

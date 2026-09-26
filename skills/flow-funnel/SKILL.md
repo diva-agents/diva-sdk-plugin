@@ -102,4 +102,4 @@ against these before you save.
 - **hooks-flow** — the SDK `flow()` builder (static core, client-side) + hooks.
 - **guards-permissions** — real tool ACLs (vs a slot's `tools` hint).
 - **tools-and-toolsets** — the client tools a funnel gates and fills from.
-- Full docs: https://front.dev.diva-ai.ru/ux/sdk-docs
+- Full docs: https://diva-ai.ru/ux/sdk-docs

@@ -59,7 +59,7 @@ External servers run with the privileges of the process that launches them
    owns-host conflict via `clientOptions` before finishing — don't leave code
    that will throw at construction.
 4. Cross-check anything you're unsure about against
-   **https://front.dev.diva-ai.ru/ux/sdk-docs** (`WebFetch`) or the bundled
+   the live docs (`WebFetch` `https://api.diva-ai.ru/v1/docs/python/latest?language=en` (or `typescript`; public JSON, no login)) or the bundled
    `${CLAUDE_PLUGIN_ROOT}/skills/diva-sdk/` docs rather than guessing at a
    parameter name.
 5. Verify: run the agent with a prompt that should trigger the new server's

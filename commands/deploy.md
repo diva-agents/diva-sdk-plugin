@@ -14,7 +14,7 @@ command — never skip the ASK step.
   `mcp__platform__*` in the currently available toolset (use `ToolSearch` with a
   query like `"platform"` if they're deferred). If none are visible, stop and
   tell the user to set `diva_mcp_key` for this plugin (Diva workspace →
-  Developers → SDK → `sk-diva-…`) before continuing.
+  Developers → MCP → issue a key, `sk-diva-…`) before continuing.
 - Confirm the agent's own source exists in this project (from `/diva:new-agent`
   or hand-written) and that it constructs cleanly — read it. If the user
   consents, run one local smoke turn first (same as `/diva:run-example`'s
