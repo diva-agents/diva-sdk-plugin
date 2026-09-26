@@ -62,16 +62,16 @@ stand, point both at it — a dev key is rejected by production:
   footgun checklist. Loads automatically whenever you're working with Diva
   agents, tools, MCP, sessions, guards/permissions/hooks, flow, or deployment.
 
-- **Commands** (`/diva:<name>`):
+- **Commands** (`/diva-sdk:<name>`):
   | Command | What it does |
   | --- | --- |
-  | `/diva:new-agent` | Scaffold a new Diva agent project (Python or TypeScript) — interviews you, verifies the API against live docs, writes a runnable agent. |
-  | `/diva:add-tool` | Add a client-side `tool()`/`toolset()` to an existing agent. |
-  | `/diva:add-mcp` | Wire an external MCP server (`MCP.stdio`/`MCP.http`) into an agent. |
-  | `/diva:run-example` | Pull a real, documented example (quickstart, tools, mcp, subagents, streaming, …) and run it. |
-  | `/diva:deploy` | Register/update an agent on the platform via the platform MCP — **confirmation-gated**: preflight → plan → ask → execute → verify. |
-  | `/diva:debug-session` | Inspect a session/run via the platform MCP and diagnose failures against the SDK's `DivaError` hierarchy. |
-  | `/diva:verify-flow` | Validate a funnel / frame-flow JSON against the current grammar + save-time invariants before you save. |
+  | `/diva-sdk:new-agent` | Scaffold a new Diva agent project (Python or TypeScript) — interviews you, verifies the API against live docs, writes a runnable agent. |
+  | `/diva-sdk:add-tool` | Add a client-side `tool()`/`toolset()` to an existing agent. |
+  | `/diva-sdk:add-mcp` | Wire an external MCP server (`MCP.stdio`/`MCP.http`) into an agent. |
+  | `/diva-sdk:run-example` | Pull a real, documented example (quickstart, tools, mcp, subagents, streaming, …) and run it. |
+  | `/diva-sdk:deploy` | Register/update an agent on the platform via the platform MCP — **confirmation-gated**: preflight → plan → ask → execute → verify. |
+  | `/diva-sdk:debug-session` | Inspect a session/run via the platform MCP and diagnose failures against the SDK's `DivaError` hierarchy. |
+  | `/diva-sdk:verify-flow` | Validate a funnel / frame-flow JSON against the current grammar + save-time invariants before you save. |
 
 - **Subagents** (delegate automatically, or invoke by name):
   | Agent | What it does |
@@ -86,7 +86,7 @@ stand, point both at it — a dev key is rejected by production:
   list/get/create/update agents, set an agent's operating mode, inspect
   sessions & runs, watch usage, and list channels — all scoped to your org by
   the key (no cross-org access). The **`platform-admin`** skill documents every
-  tool; `/diva:deploy` and `/diva:debug-session` drive them.
+  tool; `/diva-sdk:deploy` and `/diva-sdk:debug-session` drive them.
 
 - **References** (`references/`) — the full SDK API reference (TypeScript & Python,
   English), generated from the live docs pipeline and pinned per version; refresh

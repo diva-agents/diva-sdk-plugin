@@ -65,7 +65,7 @@ External servers run with the privileges of the process that launches them
 5. Verify: run the agent with a prompt that should trigger the new server's
    tools and confirm they appear under the `<server>__<tool>` namespace.
 6. For the **platform MCP** use case specifically: don't write `MCP.*` code at
-   all. Instead point the user at `/diva:deploy` (register/update an agent) or
-   `/diva:debug-session` (inspect sessions/runs) — both drive the
+   all. Instead point the user at `/diva-sdk:deploy` (register/update an agent) or
+   `/diva-sdk:debug-session` (inspect sessions/runs) — both drive the
    `mcp__platform__*` tools directly, discovering the real tool names rather
    than assuming them.

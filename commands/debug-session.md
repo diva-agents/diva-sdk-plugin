@@ -53,4 +53,4 @@ platform trace back to a client-side `tool()`, `guard.*`, or
 Depending on the diagnosis: retry the turn, loosen/tighten a `guard`, raise a
 tool's `executeTimeoutMs` (client tools) or a `handoff`'s `timeoutMs` (sub-agent
 turns default to 180 000 ms), fix a `can_use_tool`/`canUseTool` callback, or
-re-deploy the fix via `/diva:deploy`.
+re-deploy the fix via `/diva-sdk:deploy`.

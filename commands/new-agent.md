@@ -20,8 +20,8 @@ name (e.g. `support-triage`) — if empty, ask for one.
 - **Instructions**: one paragraph — the agent's persona/system prompt.
 - **Capabilities now**: any client-side tools, external MCP servers, sub-agents
   (`handoff`), a multi-turn session/store, or local skills? (If yes to any, still
-  scaffold the base agent here — hand tools/MCP off to `/diva:add-tool` /
-  `/diva:add-mcp` once the base agent runs, unless the user wants it all in one
+  scaffold the base agent here — hand tools/MCP off to `/diva-sdk:add-tool` /
+  `/diva-sdk:add-mcp` once the base agent runs, unless the user wants it all in one
   pass.)
 
 ## 2. Verify against live docs before writing code
@@ -122,7 +122,7 @@ via Bash. Then:
 
 ## 5. Next steps
 
-Point the user at `/diva:add-tool` (client-side tools), `/diva:add-mcp` (external
-MCP servers), `/diva:run-example` (pull a runnable doc example instead of
-hand-writing one), and `/diva:deploy` (register the finished agent on the
+Point the user at `/diva-sdk:add-tool` (client-side tools), `/diva-sdk:add-mcp` (external
+MCP servers), `/diva-sdk:run-example` (pull a runnable doc example instead of
+hand-writing one), and `/diva-sdk:deploy` (register the finished agent on the
 platform, confirmation-gated).

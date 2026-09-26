@@ -8,8 +8,8 @@ Wire an external MCP server into an existing Diva agent in this project.
 
 ## 1. Locate the agent and confirm the target
 
-Find the existing `Agent(...)` construction (same detection as `/diva:add-tool`).
-If none exists, suggest `/diva:new-agent` first.
+Find the existing `Agent(...)` construction (same detection as `/diva-sdk:add-tool`).
+If none exists, suggest `/diva-sdk:new-agent` first.
 
 If what's being wired is actually this **plugin's own bundled platform MCP**
 (the `platform` server in this plugin's `.mcp.json`, auth'd via the
@@ -17,7 +17,7 @@ If what's being wired is actually this **plugin's own bundled platform MCP**
 code — stop here and redirect: that MCP is already available to *you* (the
 assistant) once `diva_mcp_key` is set; it's for operating what you build
 (agents/channels/CRM/sessions), not something you attach inside agent code with
-`MCP.stdio`/`MCP.http`. Use `/diva:deploy` or `/diva:debug-session` instead.
+`MCP.stdio`/`MCP.http`. Use `/diva-sdk:deploy` or `/diva-sdk:debug-session` instead.
 
 ## 2. Interview (skip what's already given)
 
