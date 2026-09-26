@@ -105,6 +105,11 @@
         "slug": "deployment",
         "order": 21,
         "title": "Deployment"
+      },
+      {
+        "slug": "platform-visibility",
+        "order": 22,
+        "title": "What the platform sees"
       }
     ],
     "category": "Guides"

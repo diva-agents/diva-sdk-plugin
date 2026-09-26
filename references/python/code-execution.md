@@ -30,8 +30,8 @@ package's surface to begin with.
 
 - **No `builtin_tools=`** on `Agent` (or anywhere else). It is not a
   declared-but-unwired parameter the way `knowledge=` is (`Agent(knowledge=
-  ...)` raises `DivaNotImplementedError("knowledge/RAG is not wired in the
-  thin client yet")`) — `builtin_tools` simply does not exist as a symbol
+  ...)` raises `DivaNotImplementedError` pointing at the HTTP knowledge-base
+  API that is live) — `builtin_tools` simply does not exist as a symbol
   anywhere in `diva_ai`.
 - **`permissions.mode` and `permissions.deny` raise `DivaNotImplementedError`
   at construction**, because both target engine built-ins this client

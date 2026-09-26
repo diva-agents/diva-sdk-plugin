@@ -56,6 +56,7 @@ You can also point the same client at your **own** engine — see [Deployment](.
 | **Parallel agents** | Run agents/sub-agents concurrently — `parallel()`, parallel handoffs, host-side fair-scheduled sub-agents | [Parallel agents](./parallel-agents.md) |
 | **Flows** | Slot-filling conversation flows that gate tools until requirements are met | [Flow](./flow.md) |
 | **Hooks & guards** | Observe/mutate/block the agent lifecycle; client-side business rules | [Hooks](./hooks.md) · [Guards](./guards.md) |
+| **Dashboard visibility** | What your agent reports to the platform — and what never leaves your process | [What the platform sees](./platform-visibility.md) |
 | **Errors** | A typed `DivaError` hierarchy | [Error handling](./error-handling.md) |
 
 Full symbol-by-symbol reference: [API reference](./api-reference.md).

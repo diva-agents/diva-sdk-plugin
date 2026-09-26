@@ -38,6 +38,16 @@ Because invocable mode adds a client-side tool to the agent's own engine session
 invocable-skills agent **owns its host** and cannot share an explicit `client`.
 Construction throws a `DivaError` if you pass one (see [Notes & caveats](#notes--caveats)).
 
+> Invocable mode's `read_skill` is a real client tool, so it appears in the agent's tool
+> catalogue on the dashboard alongside your own. That is expected, not a defect — it is how
+> the model reaches a skill body.
+
+**A skill's body is never stored by the platform.** The dashboard lists each skill by
+`name` and `description` so an operator can see what is attached; the body is yours and
+stays out of Diva's database. This is also why the agent card shows your `instructions`
+option rather than the composed prompt — the composed one contains every body in prepend
+mode. See [What the platform sees](./platform-visibility.md).
+
 ### Prepend mode (zero-FS opt-out)
 
 `skillsMode: "prepend"` inlines **every** skill body into the system prompt on

@@ -9,6 +9,7 @@ const checkOrder = tool({
   description: "Order status from the ERP",
   inputSchema: z.object({ orderId: z.string() }),
   execute: async ({ orderId }) => erp.lookup(orderId),
+  display: { label: "Check order", icon: "📦", category: "ERP" },
 });
 ```
 

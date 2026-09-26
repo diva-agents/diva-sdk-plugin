@@ -179,6 +179,8 @@ the same shape:
 | `inputSchema` | `TSchema extends z.ZodType` | — | A zod schema. Drives the static type of `execute`'s argument, runtime argument validation, and the JSON Schema advertised to the model. |
 | `execute` | `(input: z.infer<TSchema>, ctx?: ToolExecuteContext) => unknown` | — | Your in-process function. May be sync or async. `input` is validated against `inputSchema` before it runs. The return value is coerced to text (see Result coercion). |
 | `executeTimeoutMs` | `number` (optional) | `60000` | Per-tool execute ceiling in ms. Overrides the tool-server's 60 s default. Raise it for long-running tools (e.g. a `handoff` running a full sub-agent turn). |
+| `display` | `ToolDisplay` (optional) | — | Presentation metadata for the Diva dashboard — see [Display metadata](#display-metadata). Never sent to the model. |
+| `requiresApproval` | `true` (optional) | — | Hold the call until an operator approves it in the Diva dashboard — see [Approval-gated tools](#approval-gated-tools). Never sent to the model. |
 
 ### `ToolExecuteContext`
 
@@ -202,6 +204,95 @@ Converts a tool definition into the engine/model-facing wire shape. Mostly inter
 | `name` | `string` | The tool name. |
 | `description` | `string` | The tool description. |
 | `parameters` | `Record<string, unknown>` | The JSON Schema derived from `inputSchema` via `z.toJSONSchema`. |
+| `display` | `ToolDisplay` (optional) | The normalized display block, present only when the tool declared one. On the wire it sits inside the `function` object, alongside `name`/`description`. |
+| `requiresApproval` | `true` (optional) | Present only when the tool asked for approval. On the wire it sits inside the `function` object, alongside `display`. |
+
+## Display metadata
+
+A tool name is written for the model (`check_order`), which makes it a poor label
+for a human reading the dashboard. `display` lets you give the platform a better
+one without changing anything the model sees:
+
+```ts
+const checkOrder = tool({
+  name: "check_order",
+  description: "Order status from the ERP",
+  inputSchema: z.object({ orderId: z.string() }),
+  execute: async ({ orderId }) => erp.lookup(orderId),
+  display: { label: "Check order", icon: "📦", category: "ERP" },
+});
+```
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `label` | `string` (optional) | Human title for the tool, e.g. `"Check order"`. |
+| `icon` | `string` (optional) | An emoji, or a key the dashboard's icon set understands. |
+| `category` | `string` (optional) | **Reserved.** Travels to the platform and is stored, but nothing renders it yet — it is the intended grouping key for the dashboard's tool list, e.g. `"CRM"`. |
+
+Everything about it is optional, and every part of it is optional individually.
+Omit a field and the platform falls back to the tool's `name` and `description`;
+omit the whole block and the frame the SDK sends is byte-identical to what it sent
+before `display` existed — which is what keeps an older platform working with a
+newer SDK (and the reverse). Values are trimmed, and an all-blank block is treated
+as no block at all.
+
+`display` is **not** sent to the model. The model reads `name` and `description`;
+naming a tool "Check order" in `display` does not make the model call it that.
+
+> The platform reads `label` and `icon` today — those are the two the dashboard
+> actually shows. Set `category` if you want the grouping to be right the day it
+> lands; nothing depends on it until then.
+
+## Approval-gated tools
+
+Some tools should not run because a model decided to run them. Mark one, and the
+platform holds the call and asks a human first:
+
+```ts
+const wireMoney = tool({
+  name: "wire_money",
+  description: "Send a payment from the company account",
+  inputSchema: z.object({ amount: z.number(), to: z.string() }),
+  execute: async ({ amount, to }) => bank.transfer(amount, to),
+  requiresApproval: true,
+});
+```
+
+What happens when the model calls it:
+
+1. The call stops at the Diva proxy — **before** it reaches your process. Your
+   `execute` has not been entered and will not be unless the answer is yes.
+2. An approval card appears in the organisation's dashboard, naming the agent,
+   the run and the tool. The operator opens the run to see the arguments.
+3. **Approve** — the call is handed to your process and runs normally.
+   **Deny** — the agent receives a refusal carrying the operator's reason, and
+   the model continues the turn knowing it was refused.
+   **No answer** — the card expires (300 s by default, set per deployment) and
+   the agent receives an explicit "not approved in time".
+4. Whatever happened is written into the run's trace: which tool, who decided,
+   when.
+
+Only the literal `true` arms the gate. `false`, `undefined`, and anything else are
+"not marked" — a flag that switched on for any truthy value would switch on for a
+typo.
+
+**This is a different gate from `permissions.canUseTool`, and they stack.** The
+operator decides first, on the platform, while the call is still on the wire; your
+own `canUseTool` decides second, in your process, after the call arrives. An
+approval does not skip your check. If you mark a tool here, do **not** also prompt
+a human inside `canUseTool` — that is the one way to get asked twice for the same
+call.
+
+Two limits worth knowing before you rely on it:
+
+- **The card outlives the turn, not the other way round.** The approval window is
+  the platform's (300 s by default), but your turn has its own timeout. If nobody
+  answers before your turn times out, the turn fails on your side while the
+  decision is still recorded on the platform's. Raise your turn timeout if you
+  want a genuinely long approval window.
+- **The gate is the platform's, not the SDK's.** A deployment with the feature
+  switched off passes the call straight through. The mark still travels and is
+  still shown on the tool in the dashboard.
 
 ## Notes & caveats
 

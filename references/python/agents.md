@@ -65,6 +65,7 @@ keep the platform's own spelling.
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
 | `api_key` | `str \| None` | `DIVA_API_KEY` env | Your `sk-diva-…` key. Selects the platform engine. To reach your own engine, pass `gateway_url=` instead. |
+| `label` | `str \| None` | `None` | Human-readable name for this agent on the Diva dashboard, e.g. `"Shop support"`. Without it the dashboard names the agent from its model plus an identity digest. Presentation only — it is **not** part of the agent's identity, so renaming an agent neither forks its session nor splits its run history. Blank is the same as `None`. See [What the platform sees](./platform-visibility.md). |
 | `instructions` | `str \| None` | `None` | System prompt: the agent's persona / task framing. |
 | `tools` | `list[ToolDefinition] \| None` | `None` | Client-side tools the agent can call (built with `tool(...)`). Names must be unique across `tools` + `toolsets`; a duplicate raises `DivaError` at construction. See [Tools & toolsets](./tools.md). |
 | `toolsets` | `list[Toolset] \| None` | `None` | Named groups of client-side tools (via `toolset(name, tools)`), composed alongside `tools`. See [Toolsets](./toolsets.md). |
@@ -286,10 +287,12 @@ asyncio.run(main())
   none of `tools`, `toolsets`, `mcp`, `params`, `thinking_default`,
   `permissions`, `flow`, or `skills` can conflict with a shared client the way
   they do in the TypeScript SDK — there's no such feature yet to conflict with.
-- **`knowledge` fails loud.** Passing it raises `DivaNotImplementedError`
-  immediately at construction — *"knowledge/RAG is not wired in the thin
-  client yet."* The field exists so the surface is stable; it is not yet
-  functional.
+- **`knowledge` fails loud, and the refusal is a signpost.** Passing it raises
+  `DivaNotImplementedError` at construction, naming the endpoints that work
+  today (`POST /api/v1/agi/sdk/kb/collections`, then
+  `/collections/{id}/chunks`) and the fact that a `byo` corpus reaches the
+  agent too — the platform indexes its text with its own embedder. The
+  argument is not yet functional; the knowledge base itself is.
 - **`permissions.mode` / `permissions.deny` fail loud too.** They target
   engine built-ins the thin/hosted client doesn't expose, and raise
   `DivaNotImplementedError` at construction. Use `can_use_tool` (+ `allow`) to

@@ -59,6 +59,18 @@ could later be POSTed verbatim to the platform's `/v1/flows` endpoint for
 server-side enforcement of the full grammar (including the parts the local
 interpreter doesn't execute).
 
+**The funnel's shape is reported to the dashboard automatically.** Attach a
+`flow=` and the agent card draws it with the platform's own funnel graph, labelled
+"defined in code" and read-only. Edit the funnel in your code and a new version
+appears next to the old one; re-run the same code and nothing is added, because
+the version key is a hash of the description. Each turn also reports which slots
+are filled, so a run's trace shows which step the conversation was on — flags
+only, never the value a slot was filled with. Execution stays in your process,
+exactly as below. See [What the platform sees](./platform-visibility.md).
+
+`Agent.funnel_state()` returns the same object the SDK reports, so you can log
+what the platform is about to be told.
+
 When you attach `flow=` to an `Agent`, its interpreter is compiled to a
 `Hooks` object and composed alongside any `hooks=`/`guards=` you also pass —
 the same hook chain every other hook-based feature in this SDK uses.
@@ -321,7 +333,10 @@ The SDK-level flow name plus the platform frame. Pass the whole `Flow` to an
   interpreter surfaces unmet-slot `ask` hints and `rule` text by *replacing*
   the outgoing user message at the start of every turn (`before_agent_start`),
   not by appending text after a specific tool result the way `.injection()`
-  describes.
+  describes. The TypeScript SDK does the same, and deliberately: this text
+  changes as slots fill, and the platform derives an agent's **identity** from
+  the system prompt — guidance placed there would make one agent look like a new
+  one on every turn.
 - **Slot hints are guidance, not guarantees.** `ask` and a slot's `tools` list
   are informational only; only `fill_when` (via `completion`/`gate`) is
   enforced. `tools` is not an ACL — use `Permissions` /

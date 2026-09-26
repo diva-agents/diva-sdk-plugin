@@ -105,6 +105,11 @@
         "slug": "deployment",
         "order": 20,
         "title": "Deployment — where the engine runs"
+      },
+      {
+        "slug": "platform-visibility",
+        "order": 100,
+        "title": "What the platform sees"
       }
     ],
     "category": "Guides"

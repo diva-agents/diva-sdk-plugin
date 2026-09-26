@@ -34,6 +34,12 @@ every turn (`compose_skills(instructions, skills)`, appended after `instructions
 touched by the agent at request time (only `skill_from_dir()` reads a file, and only once,
 when you call it), and no extra tool is added.
 
+**A skill's body is never stored by the platform.** The dashboard lists each skill by
+`name` and `description` so an operator can see what is attached; the body is yours and
+stays out of Diva's database. This is also why the agent card shows your `instructions`
+argument rather than the composed prompt — the composed one contains every body. See
+[What the platform sees](./platform-visibility.md).
+
 `diva-ai` is a thin client — there is no locally-hosted engine process for it to write
 `SKILL.md` files into or expose a `read_skill` tool from, so there is only **one** way skills
 reach the model: composed directly into the prompt. If you need to control per-turn token
