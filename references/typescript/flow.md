@@ -13,6 +13,15 @@ the tools run**:
   **every** tool (client, backend, and MCP alike), including tools that execute
   inside the engine.
 
+**The funnel's shape is reported to the dashboard automatically.** Attach a
+`flow` and the agent card draws it with the platform's own funnel graph, labelled
+"defined in code" and read-only. Edit the funnel in your code and a new version
+appears next to the old one; re-run the same code and nothing is added, because
+the version key is a hash of the description. Each turn also reports which slots
+are filled, so a run's trace shows which step the conversation was on — flags
+only, never the value a slot was filled with. Execution stays where the tools
+run, as above. See [What the platform sees](./platform-visibility.md).
+
 A flow is dialogue management, **not** a control-flow step graph. It separates the
 **guarantee** (a terminal action is hard-blocked until its slots are filled) from
 **guidance** (soft prompt hints); it never narrows or forces the model's tool
@@ -273,6 +282,14 @@ Set on [`AgentOptions`](./agents.md):
   roadmap hints; only `fillWhen` (via `completion`/`gate`) is enforced. `tools` is
   explicitly **not an ACL** — use [Permissions](./permissions.md) to restrict tool
   access.
+- **The guidance travels in the message, not in the system prompt.** Each turn
+  the funnel prepends its unmet-slot `ask` hints and `rule` lines to the message
+  you send — the same place the Python SDK puts them. It used to ride in
+  `extraSystemPrompt`, which was wrong for a reason worth knowing: the platform
+  derives an agent's **identity** from that string, and this text changes as
+  slots fill, so a single agent turned into a new dashboard row on every hop of
+  a turn. Per-turn text belongs in a per-turn field; your system prompt stays
+  stable across a conversation, which is also what prompt caching assumes.
 - **Anti-livelock is built in.** A gate stops blocking after `maxBlocks`
   consecutive blocks (default 2, max 10) so a confused model can't be trapped
   forever.

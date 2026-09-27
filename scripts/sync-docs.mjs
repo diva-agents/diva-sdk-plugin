@@ -30,6 +30,38 @@ const SLUG_RE = /^[a-z0-9][a-z0-9-]*(\/[a-z0-9][a-z0-9-]*)*$/;
 const FENCE = { typescript: "ts", python: "python" };
 const FETCH_TIMEOUT_MS = 30_000;
 
+// Fixes this repo applies ON TOP of the published docs, re-applied on every
+// sync. The docs service renders from the SDK source and knows nothing about
+// them, so a plain sync silently reverts each one — which is exactly what
+// happened to the ID-1520 pins the first time this script was re-run (they
+// were hand-fixed in PR #2 and a rebuild put the broken lines straight back).
+//
+// Each override MUST match. If upstream rewords the line, the sync FAILS
+// instead of quietly dropping the fix — the whole point is that a silent
+// revert is worse than a red run.
+const OVERRIDES = [
+  {
+    sdk: "python",
+    rel: "overview.md",
+    why: "ID-1520: a bare `diva-ai` resolves to the 0.0.1 reserved-name stub",
+    from: `pip install diva-ai            # core\npip install 'diva-ai[mcp]'     # + external MCP servers`,
+    to: `pip install "diva-ai>=0.1.0a1"            # core\npip install "diva-ai[mcp]>=0.1.0a1"       # + external MCP servers`,
+  },
+  {
+    sdk: "python",
+    rel: "mcp.md",
+    why: "ID-1520: same, for the mcp extra",
+    from: `pip install 'diva-ai[mcp]'`,
+    to: `pip install "diva-ai[mcp]>=0.1.0a1"`,
+  },
+];
+
+// Catches an install line the OVERRIDES table does not know about — a NEW page
+// introducing `pip install diva-ai` with no specifier. pip skips pre-releases,
+// and the only non-prerelease on PyPI is the 1.3 kB stub, so such a line hands
+// the reader an ImportError. Delete this guard the day a stable release exists.
+const BARE_INSTALL_RE = /pip install\s+['"]?diva-ai(\[[a-z,]+\])?['"]?(?!\S*[><=])/;
+
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const REF_DIR = join(ROOT, "references");
 
@@ -103,6 +135,43 @@ function pageMarkdown(page, sdk, slug) {
   throw new Error(`page ${sdk}/${slug} has neither markdown nor a reference object`);
 }
 
+// Re-apply this repo's local fixes to the freshly rendered pages. A miss is an
+// error, not a warning: the alternative is shipping a reverted fix.
+function applyOverrides(sdk, files) {
+  for (const o of OVERRIDES) {
+    if (o.sdk !== sdk) continue;
+    const file = files.find((f) => f.rel === o.rel);
+    if (!file) {
+      throw new Error(
+        `override for ${sdk}/${o.rel} has no such page any more (${o.why}) — ` +
+          `re-target or drop it, do not leave it silently unapplied`,
+      );
+    }
+    if (!file.content.includes(o.from)) {
+      throw new Error(
+        `override for ${sdk}/${o.rel} did not match (${o.why}) — upstream ` +
+          `reworded it; update OVERRIDES in this script before syncing`,
+      );
+    }
+    file.content = file.content.replace(o.from, o.to);
+  }
+}
+
+function assertNoBareInstall(sdk, files) {
+  if (sdk !== "python") return;
+  for (const f of files) {
+    const m = f.content.match(BARE_INSTALL_RE);
+    if (m) {
+      throw new Error(
+        `${sdk}/${f.rel} installs diva-ai with no version specifier ` +
+          `(${JSON.stringify(m[0])}). pip skips pre-releases and the only ` +
+          `non-prerelease on PyPI is the 0.0.1 stub, so this line gives the ` +
+          `reader an ImportError (ID-1520). Add an OVERRIDES entry.`,
+      );
+    }
+  }
+}
+
 // Fetch + validate + render EVERYTHING for one SDK in memory. Throws BEFORE any
 // filesystem mutation, so a bad/empty bundle never wipes a good references tree.
 async function buildSdk(sdk) {
@@ -138,6 +207,8 @@ async function buildSdk(sdk) {
     }
     files.push({ rel: `${slug}.md`, content: pageMarkdown(page, sdk, slug) });
   }
+  applyOverrides(sdk, files);
+  assertNoBareInstall(sdk, files);
   files.push({ rel: "_nav.json", content: `${JSON.stringify(bundle.nav, null, 2)}\n` });
 
   return {

@@ -1,22 +1,42 @@
 # Agent (class)
 
-The top-level entry point for building an agent on the Diva platform.
-
 ```ts
-const agent = new Agent("diva/deepseek/deepseek-v4-flash", { instructions: "You are a sales assistant." });
-const { text } = await agent.run("Hi!");
+Agent(model?: string, options?: AgentOptions): Agent
 ```
 
-The model ref is the platform id from GET /v1/models — always namespaced
-("diva/<family>/<id>"). The leading segment routes the turn through the Diva
-provider; a ref without it is rejected so a turn can never escape the gateway.
-
-The harness runs inside a headless Diva runtime the SDK supervises;
-every LLM call goes through the Diva /v1 gateway on your sk-diva key.
+## serve — method
 
 ```ts
-Agent(model: string, options?: AgentOptions): Agent
+serve(opts?: ServeOptions | undefined): Promise<ServeHandle>
 ```
+
+Hold a connection open so the PLATFORM can reach this agent (ТЗ H, §4.6).
+
+Without it an agent is only ever visible after the fact: it appears in the
+dashboard because it ran a turn, and it looks "offline" the moment it stops
+running them, whether or not the process is alive. With it, the process says
+which agent it serves and then stays on the line, so the dashboard can show
+it as genuinely reachable and an operator can talk to it from the web — with
+the agent's `tool()`s executing right here, which is the only place they can.
+
+```ts
+const controller = new AbortController();
+process.on("SIGINT", () => controller.abort());
+const serving = await agent.serve({ signal: controller.signal });
+await serving.closed();
+```
+
+Reconnects on its own with exponential backoff, and deregisters on `stop()`
+so the dashboard flips to offline immediately rather than when the lease
+lapses. Calling it twice on one agent throws rather than opening a second
+socket — two connections for one process is a state the platform tolerates
+(a developer may genuinely run two) and this process has no reason to create.
+
+| param | type | required |
+|---|---|---|
+| `opts` | `ServeOptions \| undefined` | no |
+
+Returns: `Promise<ServeHandle>`
 
 ## run — method
 

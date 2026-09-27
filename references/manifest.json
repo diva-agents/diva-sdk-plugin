@@ -3,14 +3,14 @@
   "language": "en",
   "syncedFrom": {
     "typescript": {
-      "version": "0.1.0-alpha.1",
-      "generatedAt": "2026-07-27T10:23:51.505Z",
-      "pages": 33
+      "version": "0.1.0-alpha.5",
+      "generatedAt": "2026-08-24T13:53:01.609Z",
+      "pages": 34
     },
     "python": {
-      "version": "0.1.0a1",
-      "generatedAt": "2026-07-27T10:23:50.239970+00:00",
-      "pages": 32
+      "version": "0.1.0a5",
+      "generatedAt": "2026-08-24T13:52:33.953289+00:00",
+      "pages": 33
     }
   }
 }
