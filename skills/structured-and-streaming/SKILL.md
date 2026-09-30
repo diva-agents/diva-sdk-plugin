@@ -127,4 +127,4 @@ wrap it in `contextlib.aclosing(...)` for a deterministic cancel.
   languages (its own ephemeral namespace), but its relationship to a
   client-side `store` differs by language — see the **sessions-memory** skill.
 
-Full reference: https://front.dev.diva-ai.ru/ux/sdk-docs
+Full reference: https://diva-ai.ru/ux/sdk-docs

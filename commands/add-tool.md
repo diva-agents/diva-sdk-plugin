@@ -11,7 +11,7 @@ Add a client-side `tool()` to an existing Diva agent in this project.
 Find the existing `new Agent(` / `Agent(` construction with `Grep`/`Read`.
 Detect the language from `package.json` (`@diva-ai/sdk`) vs `pyproject.toml` /
 `requirements.txt` (`diva-ai`). If more than one agent exists in the project, ask
-which one gets the new tool. If none exists, suggest `/diva:new-agent` first.
+which one gets the new tool. If none exists, suggest `/diva-sdk:new-agent` first.
 
 ## 2. Interview (skip what's already given)
 
@@ -100,5 +100,5 @@ this never applies there.
 ## 6. Verify
 
 Run the agent with a prompt designed to trigger the new tool (via
-`/diva:run-example`-style manual run, or the project's own entry point) and
+`/diva-sdk:run-example`-style manual run, or the project's own entry point) and
 confirm the model actually calls it and the reply reflects the tool's result.

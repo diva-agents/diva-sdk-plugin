@@ -178,4 +178,4 @@ duplicate slot name, no `completion()`, an unknown slot in `requires`, or a gate
 - `generate()` runs every hook up to twice (initial attempt + one JSON-repair retry) on the
   schema-augmented prompt text, not the bare user message, in both SDKs.
 
-Full docs: https://front.dev.diva-ai.ru/ux/sdk-docs
+Full docs: https://diva-ai.ru/ux/sdk-docs

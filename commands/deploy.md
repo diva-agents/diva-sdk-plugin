@@ -14,10 +14,10 @@ command — never skip the ASK step.
   `mcp__platform__*` in the currently available toolset (use `ToolSearch` with a
   query like `"platform"` if they're deferred). If none are visible, stop and
   tell the user to set `diva_mcp_key` for this plugin (Diva workspace →
-  Developers → SDK → `sk-diva-…`) before continuing.
-- Confirm the agent's own source exists in this project (from `/diva:new-agent`
+  Developers → MCP → issue a key, `sk-diva-…`) before continuing.
+- Confirm the agent's own source exists in this project (from `/diva-sdk:new-agent`
   or hand-written) and that it constructs cleanly — read it. If the user
-  consents, run one local smoke turn first (same as `/diva:run-example`'s
+  consents, run one local smoke turn first (same as `/diva-sdk:run-example`'s
   preflight: `DIVA_API_KEY` must be set) — deploying code that doesn't even run
   locally wastes a platform call and makes debugging harder later.
 - **Discover the real tool surface — do not assume names.** List the available
@@ -58,6 +58,6 @@ id/URL the platform returned.
 
 ## 6. Next steps
 
-Point the user at `/diva:debug-session` to inspect the agent's first run once
+Point the user at `/diva-sdk:debug-session` to inspect the agent's first run once
 it's live, and mention that channel/CRM/knowledge-base operations go through
 the same platform MCP tools.

@@ -21,7 +21,9 @@ in API parity: `@diva-ai/sdk` (TypeScript, Node ≥ 22.14) and `diva-ai` (Python
    non-Diva gateway URL or point the client at OpenAI/Anthropic directly. The
    default gateway is `wss://api.diva-ai.ru/gateway`; only override via
    `DIVA_GATEWAY_URL` / `clientOptions.remoteHost` (TS) or `gateway_url=` (Py)
-   when the user explicitly wants self-host/local-dev mode.
+   when the user explicitly wants self-host/local-dev mode or a Diva dev
+   account (`DIVA_GATEWAY_URL=wss://api.dev.diva-soft.ru/gateway`; a dev key
+   is rejected by production). The key is the one from Developers → API access.
 3. **Fail-loud, never silent.** Unwired features (`knowledge`,
    `permissions.mode`/`deny` on the hosted client, a `platform:<name>` skill
    ref) raise a typed `DivaNotImplementedError` at construction or turn start.
@@ -41,7 +43,7 @@ in API parity: `@diva-ai/sdk` (TypeScript, Node ≥ 22.14) and `diva-ai` (Python
 ## Before finalizing anything — verify against live docs
 
 Cross-check the API you're about to emit against
-**https://front.dev.diva-ai.ru/ux/sdk-docs** (`WebFetch`) and the bundled
+the live docs — `WebFetch` `https://api.diva-ai.ru/v1/docs/python/latest?language=en` (or `typescript`; public JSON, no login); humans read them at **https://diva-ai.ru/ux/sdk-docs** — and the bundled
 skill files at `${CLAUDE_PLUGIN_ROOT}/skills/diva-sdk/`. Never invent an
 option, method, or class that isn't documented in one of those two places — if
 you're not sure a field exists, fetch and check rather than guess. This SDK is

@@ -191,4 +191,4 @@ agent = Agent(
 - `top_p` is a no-op in `params` in **both** SDKs — use `temperature` for sampling and
   `thinkingDefault`/`thinking_default` for reasoning effort.
 
-Full docs: https://front.dev.diva-ai.ru/ux/sdk-docs
+Full docs: https://diva-ai.ru/ux/sdk-docs

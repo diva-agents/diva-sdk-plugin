@@ -96,4 +96,4 @@ of construction with `composeToolsets([...])` (TS) / `compose_toolsets([...])`
   Raise it for slow backends or a tool that runs a full sub-agent turn
   (`handoff`).
 
-Full reference: https://front.dev.diva-ai.ru/ux/sdk-docs
+Full reference: https://diva-ai.ru/ux/sdk-docs

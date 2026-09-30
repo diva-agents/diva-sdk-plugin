@@ -86,7 +86,7 @@ source; **slot-closure** (every `required` slot must be fillable — has `tools`
 referenced tool must be in the agent's arsenal; unique frame `key`s; **no two frames share a
 terminal action**; `escalation.action` ≠ any `completions[]` arm action.
 
-Use the **`/diva:verify-flow`** command (or the `diva-flow-verifier` agent) to check a funnel-JSON
+Use the **`/diva-sdk:verify-flow`** command (or the `diva-flow-verifier` agent) to check a funnel-JSON
 against these before you save.
 
 ## Footguns
@@ -102,4 +102,4 @@ against these before you save.
 - **hooks-flow** — the SDK `flow()` builder (static core, client-side) + hooks.
 - **guards-permissions** — real tool ACLs (vs a slot's `tools` hint).
 - **tools-and-toolsets** — the client tools a funnel gates and fills from.
-- Full docs: https://front.dev.diva-ai.ru/ux/sdk-docs
+- Full docs: https://diva-ai.ru/ux/sdk-docs

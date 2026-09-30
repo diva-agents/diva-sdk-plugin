@@ -165,4 +165,4 @@ host-side lane reachable through either thin client.
 - A handoff always runs a **distinct persona**: the sub-agent's own `instructions`/model/tools,
   never the parent's.
 
-Full docs: https://front.dev.diva-ai.ru/ux/sdk-docs
+Full docs: https://diva-ai.ru/ux/sdk-docs

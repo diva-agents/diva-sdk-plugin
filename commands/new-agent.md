@@ -20,16 +20,16 @@ name (e.g. `support-triage`) — if empty, ask for one.
 - **Instructions**: one paragraph — the agent's persona/system prompt.
 - **Capabilities now**: any client-side tools, external MCP servers, sub-agents
   (`handoff`), a multi-turn session/store, or local skills? (If yes to any, still
-  scaffold the base agent here — hand tools/MCP off to `/diva:add-tool` /
-  `/diva:add-mcp` once the base agent runs, unless the user wants it all in one
+  scaffold the base agent here — hand tools/MCP off to `/diva-sdk:add-tool` /
+  `/diva-sdk:add-mcp` once the base agent runs, unless the user wants it all in one
   pass.)
 
 ## 2. Verify against live docs before writing code
 
 The umbrella skill (`skills/diva-sdk/SKILL.md` in this plugin) says the docs are
 "always the source of truth, kept in sync with the code." Before generating
-anything, `WebFetch` **https://front.dev.diva-ai.ru/ux/sdk-docs** (and the
-language-specific getting-started/quickstart section under it) to confirm the
+anything, `WebFetch` the live docs bundle
+`https://api.diva-ai.ru/v1/docs/python/latest?language=en` (or `typescript`; public JSON, no login) and read its `overview` and `quickstart` pages to confirm the
 package name, install command, and `Agent` constructor shape below haven't
 drifted. If the fetch fails, fall back to the bundled skill doc and say so
 explicitly in your summary — don't silently proceed on stale assumptions.
@@ -122,7 +122,7 @@ via Bash. Then:
 
 ## 5. Next steps
 
-Point the user at `/diva:add-tool` (client-side tools), `/diva:add-mcp` (external
-MCP servers), `/diva:run-example` (pull a runnable doc example instead of
-hand-writing one), and `/diva:deploy` (register the finished agent on the
+Point the user at `/diva-sdk:add-tool` (client-side tools), `/diva-sdk:add-mcp` (external
+MCP servers), `/diva-sdk:run-example` (pull a runnable doc example instead of
+hand-writing one), and `/diva-sdk:deploy` (register the finished agent on the
 platform, confirmation-gated).

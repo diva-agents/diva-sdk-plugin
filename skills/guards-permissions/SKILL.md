@@ -153,4 +153,4 @@ agent = Agent(
 - `deny` (where it works) uses **engine tool names** (`exec`, `write`, `read`), not Claude's
   (`Bash`, `Write`, `Read`) — a Claude-shaped name is caught at construction with a hint.
 
-Full docs: https://front.dev.diva-ai.ru/ux/sdk-docs
+Full docs: https://diva-ai.ru/ux/sdk-docs

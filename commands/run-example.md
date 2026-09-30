@@ -22,7 +22,7 @@ Infer from the current project (`@diva-ai/sdk` in `package.json` vs `diva-ai` in
   `structured_output`, `subagents_parallel`.
 
 If `$ARGUMENTS` doesn't match one of these, `WebFetch`
-**https://front.dev.diva-ai.ru/ux/sdk-docs** and its index/guide pages to find
+`https://api.diva-ai.ru/v1/docs/python/latest?language=en` (or `typescript`; public JSON, no login) and its guide pages to find
 the closest current example rather than guessing — the docs are the source of
 truth and this list may be stale.
 

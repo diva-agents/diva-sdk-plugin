@@ -88,4 +88,4 @@ Server names must be letter-led identifiers (`^[a-zA-Z][a-zA-Z0-9_-]*$`) and uni
 - Python only: **tool results are flattened to plain text**, prefixed
   `[tool error] ` when the MCP call reports `isError`.
 
-Full reference: https://front.dev.diva-ai.ru/ux/sdk-docs
+Full reference: https://diva-ai.ru/ux/sdk-docs

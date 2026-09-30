@@ -11,7 +11,7 @@ skills (tools, mcp, sessions-memory, guards-permissions, flow, subagents,
 deployment, error-handling) for depth.
 
 Full docs (always the source of truth, kept in sync with the code):
-**https://front.dev.diva-ai.ru/ux/sdk-docs** (Python & TypeScript, EN/RU).
+**https://diva-ai.ru/ux/sdk-docs** (Python & TypeScript, EN/RU).
 
 For exact signatures offline, this plugin bundles the generated API reference at
 `${CLAUDE_PLUGIN_ROOT}/references/typescript/` and `.../python/` (English,
@@ -23,7 +23,8 @@ for the pinned SDK versions.
 1. **Thin client, engine runs server-side.** The SDK never runs an agent engine
    locally. `run` / `stream` / `generate` open a WebSocket to the Diva gateway;
    all model traffic and tool orchestration happen on the platform.
-2. **Traffic-lock.** The gateway URL defaults to `wss://api.diva-ai.ru/gateway` and
+2. **Traffic-lock.** The gateway URL defaults to `wss://api.diva-ai.ru/gateway` (a
+   dev-stand account sets `DIVA_GATEWAY_URL=wss://api.dev.diva-soft.ru/gateway`) and
    auth is a **bearer `sk-diva-…` key only** — there is no bring-your-own-provider
    and no local model. Don't try to point the SDK at OpenAI/Anthropic directly.
 3. **Fail-loud, never silent.** Unwired/planned features raise a typed

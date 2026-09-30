@@ -84,4 +84,4 @@ method may be sync or async).
   language — if a reply hook/guard blocks the turn, the store commit is never
   reached.
 
-Full reference: https://front.dev.diva-ai.ru/ux/sdk-docs
+Full reference: https://diva-ai.ru/ux/sdk-docs
