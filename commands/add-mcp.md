@@ -12,10 +12,10 @@ Find the existing `Agent(...)` construction (same detection as `/diva-sdk:add-to
 If none exists, suggest `/diva-sdk:new-agent` first.
 
 If what's being wired is actually this **plugin's own bundled platform MCP**
-(the `platform` server in this plugin's `.mcp.json`, auth'd via the
-`diva_mcp_key` plugin setting) rather than a new server for the *agent's own*
+(the `platform` server in this plugin's `.mcp.json`, signed in with the user's
+Diva account via `/mcp`) rather than a new server for the *agent's own*
 code — stop here and redirect: that MCP is already available to *you* (the
-assistant) once `diva_mcp_key` is set; it's for operating what you build
+assistant) once the user has signed in via `/mcp`; it's for operating what you build
 (agents/channels/CRM/sessions), not something you attach inside agent code with
 `MCP.stdio`/`MCP.http`. Use `/diva-sdk:deploy` or `/diva-sdk:debug-session` instead.
 

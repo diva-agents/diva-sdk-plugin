@@ -4,8 +4,8 @@ argument-hint: [agent name]
 ---
 
 Register/update an agent on the Diva platform using this plugin's bundled
-platform MCP (server `platform` in `.mcp.json`, authenticated with the
-`diva_mcp_key` plugin setting). This is a **state-mutating, confirmation-gated**
+platform MCP (server `platform` in `.mcp.json`, signed in with the user's Diva
+account over OAuth). This is a **state-mutating, confirmation-gated**
 command — never skip the ASK step.
 
 ## 1. Preflight
@@ -13,8 +13,7 @@ command — never skip the ASK step.
 - Confirm the platform MCP is actually reachable: look for tools named
   `mcp__platform__*` in the currently available toolset (use `ToolSearch` with a
   query like `"platform"` if they're deferred). If none are visible, stop and
-  tell the user to set `diva_mcp_key` for this plugin (Diva workspace →
-  Developers → MCP → issue a key, `sk-diva-…`) before continuing.
+  tell the user to connect it before continuing: run `/mcp`, pick `plugin:diva-sdk:platform` → **Authenticate**, sign in to Diva in the browser and press **Allow**.
 - Confirm the agent's own source exists in this project (from `/diva-sdk:new-agent`
   or hand-written) and that it constructs cleanly — read it. If the user
   consents, run one local smoke turn first (same as `/diva-sdk:run-example`'s

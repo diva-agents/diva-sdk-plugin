@@ -12,8 +12,8 @@ distinct kinds of MCP in play here — never conflate them:
    / `MCP.http(...)`, passed to `Agent({ mcp: [...] })` / `Agent(mcp=[...])`.
    These are tools the *agent you're building* gets to call.
 2. **This plugin's bundled platform MCP** (server `platform` in the plugin's
-   `.mcp.json`, `https://api.diva-ai.ru/mcp/platform-admin/mcp`, bearer-authed
-   via the `diva_mcp_key` plugin setting). This is a set of tools available to
+   `.mcp.json`, `https://api.diva-ai.ru/mcp/platform-admin/mcp`, signed in with
+   the user's Diva account over OAuth via `/mcp`). This is a set of tools available to
    *you* (the assistant) for operating agents/sessions/runs on the platform —
    it is not something you attach inside an agent's own `mcp` list. If asked to
    "wire platform MCP into the agent," clarify and redirect to the operational

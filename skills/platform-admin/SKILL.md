@@ -11,8 +11,9 @@ The plugin bundles the **`platform`** MCP server (the `platform` entry in
 SDK: list/create/
 configure agents, inspect their sessions and runs, watch token spend, and see
 which channels are bound. It is called **directly by you** (or your tooling — Claude
-Code, a CI script) holding an org-scoped `sk-diva-…` key, the same key primitive
-`POST /v1/chat/completions` authenticates.
+Code, a CI script). In Claude Code you sign in with your Diva account over OAuth
+(`/mcp` → Authenticate → Allow) — no key to copy; headless tooling can instead send
+an org-scoped MCP key (`sk-diva-…`) as a static bearer.
 
 **Not the `mcp` skill.** That skill wires an *external* program/service into an
 agent as callable tools (`MCP.stdio` / `MCP.http`). This skill *administers Diva*.
@@ -20,7 +21,8 @@ Orthogonal systems — reach for the right one.
 
 ## Org-scoping — the one thing to internalize
 
-Every tool derives its `org_id` **server-side from the bearer key**. There is **no
+Every tool derives its `org_id` **server-side from the credential** — the OAuth
+token you got by signing in, or the MCP key. There is **no
 `org_id` parameter on any tool**, and there is no way to reach another org's data —
 tenant isolation is structural, not a filter you could forget. A `system_admin`
 (non-org-scoped) key is rejected outright.
@@ -110,17 +112,26 @@ are **not bugs** — they mean a feature isn't configured on that deployment:
   deployment reads from Postgres; otherwise from the filesystem state dir. Same tool,
   different source, occasionally different availability.
 
-## Key setup — and the DUAL-KEY reality
+## Sign-in — and the separate SDK key
 
-The `platform` MCP authenticates with the plugin's **`diva_mcp_key`** user-config
-value, sent as `Authorization: Bearer sk-diva-…`. Set it once in the plugin config
-and the MCP tools work.
+The `platform` MCP needs no key. The first time you use it, run `/mcp`, pick
+`plugin:diva-sdk:platform` → **Authenticate**: the browser opens Diva, you sign in and
+press **Allow** on the consent screen, and Claude Code keeps (and refreshes) the token.
+You act as that user in their current organization. Until then `/mcp` shows the server
+as *needs authentication* and no `platform` tools are available.
 
-**But that config feeds the MCP header ONLY.** If you *also* run Diva SDK code in the
-same project, the SDK reads its key from **`DIVA_API_KEY`** in the shell / `.env`
-(see the `diva-sdk` skill) — the plugin's `diva_mcp_key` does not populate it. Two
-places, same `sk-diva-…` value: set both, or the MCP tools work while your SDK `run()`
-fails with `DivaAuthError` (or vice-versa).
+The plugin points at production (`https://api.diva-ai.ru/mcp/platform-admin/mcp`).
+For another stand, start Claude Code with `DIVA_MCP_URL` set, e.g.
+`DIVA_MCP_URL=https://api.dev.diva-soft.ru/mcp/platform-admin/mcp`.
+
+**Headless / CI** (no browser to sign in): add the server yourself with an MCP key from
+**Developers → MCP** — `claude mcp add --transport http diva <url> --header
+"Authorization: Bearer sk-diva-…"`. An SDK/inference key is rejected there with `401`.
+
+**Signing in does not give your code a key.** If you *also* run Diva SDK code in the
+same project, the SDK reads **`DIVA_API_KEY`** from the shell / `.env` (see the
+`diva-sdk` skill) — issue it on **Developers → API** (`/ux/api-keys`). Without it the
+MCP tools work while your SDK `run()` fails with `DivaAuthError`.
 
 ## Scope — what this surface does NOT include
 

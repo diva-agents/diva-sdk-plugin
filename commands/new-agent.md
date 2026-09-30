@@ -116,7 +116,10 @@ via Bash. Then:
 
 - If `DIVA_API_KEY` is set in the environment, offer to run the new agent's
   first turn as a smoke test and show the output.
-- If it isn't set, print the exact run command
+- If it isn't set, say where to get it — issue it in the Diva workspace → **Developers → API** (`/ux/api-keys`; the
+  plugin's MCP sign-in does not provide it), then `export DIVA_API_KEY=sk-diva-…`.
+  On the dev stand also `export DIVA_GATEWAY_URL=wss://api.dev.diva-soft.ru/gateway` —
+  print the exact run command
   (`DIVA_API_KEY=sk-diva-… node --import tsx <name>.ts` /
   `DIVA_API_KEY=sk-diva-... python <name>.py`) and stop — never fabricate a key.
 
