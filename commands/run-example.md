@@ -41,8 +41,10 @@ Write it to `./examples/<name>.ts` or `./examples/<name>.py`, creating the
 
 ## 5. Preflight
 
-Check `DIVA_API_KEY` is set (don't print its value). If it isn't, stop and ask
-the user to `export DIVA_API_KEY=sk-diva-...` — never fabricate or guess a key.
+Check `DIVA_API_KEY` is set (don't print its value). If it isn't, stop and tell
+the user where to get it — the Diva workspace → **Developers → API**
+(`/ux/api-keys`); signing in to the plugin's MCP does not provide it — and to
+`export DIVA_API_KEY=sk-diva-...` — never fabricate or guess a key.
 
 ## 6. Install and run
 

@@ -7,7 +7,7 @@ commands, three specialist subagents, and the hosted Diva platform MCP server.
 
 Diva SDK agents are a **thin client**: `Agent(model, ...)` opens a WebSocket to
 a remote Diva gateway and the model loop, tool orchestration, and compaction
-all run **server-side**. Auth is a single bearer `sk-diva-…` key — there's no
+all run **server-side**. SDK auth is a single bearer `sk-diva-…` key — there's no
 bring-your-own-provider and no local engine to run. Model refs are namespaced
 `diva/<family>/<model>` (e.g. `diva/deepseek/deepseek-v4-flash`), and the Python and
 TypeScript clients speak the same gateway protocol with byte-identical session
@@ -15,44 +15,62 @@ keys, so a conversation can be resumed from either.
 
 ## Install
 
+In Claude Code:
+
 ```
-/plugin marketplace add /path/to/diva-sdk-plugin
+/plugin marketplace add diva-agents/diva-sdk-plugin
 /plugin install diva-sdk@diva
 ```
 
-(Once this plugin is published to a git remote, use that URL instead of a
-local path with `/plugin marketplace add`.)
-
-Then enable it — it ships `"defaultEnabled": false`, so it won't activate on
-install alone:
+The plugin is enabled on install. Then connect the platform MCP with your Diva
+account — no key to copy:
 
 ```
-/plugin enable diva-sdk
+/mcp
 ```
 
-### Set your keys
+pick **`plugin:diva-sdk:platform`** → **Authenticate**. The browser opens Diva: sign
+in (if you aren't already) and press **Allow**. Back in Claude Code the server shows
+as connected; ask *"which Diva workspace am I in?"* to check. Claude Code keeps and
+refreshes the token; you act as that user in their current organization.
 
-The plugin and the SDK use **two different `sk-diva-…` keys** — they are not
-interchangeable:
+### The SDK key (only for SDK code)
 
-- **`diva_mcp_key`** (plugin setting, marked sensitive) — the bearer for the
-  bundled platform MCP. Issue it from your Diva workspace → **Developers → MCP
-  keys**; it carries MCP scope. An ordinary SDK/inference key here is rejected
-  with `401`. You're prompted for it when you enable the plugin, or set it any
-  time via `/plugin`.
-- **`DIVA_API_KEY`** (your own shell/`.env`) — the SDK/inference key the agents
-  you run read at runtime. There is no separate "SDK" page: this is the key
-  issued on **Разработчикам → API** (Developers → API access, `/ux/api-keys`,
-  the page for the OpenAI-compatible `/v1` keys) — then
-  `export DIVA_API_KEY=sk-diva-…`. The plugin config does **not** export it, so
-  SDK runs throw `DivaAuthError` without it.
+Agents you write with the SDK and run from your machine need their own key:
+**`DIVA_API_KEY`**, issued in your Diva workspace → **Developers → API**
+(`/ux/api-keys`, the page for the OpenAI-compatible `/v1` keys) —
+`export DIVA_API_KEY=sk-diva-…`. Signing in to the MCP does not provide it; without
+it SDK runs throw `DivaAuthError`. `/diva-sdk:new-agent` tells you where to get it
+if it's missing.
 
-By default both the MCP and the SDK target production. To test against the dev
-stand, point both at it — a dev key is rejected by production:
+### Dev stand
 
-- plugin setting **`diva_mcp_url`** = `https://api.dev.diva-soft.ru/mcp/platform-admin/mcp`;
-- SDK: `export DIVA_GATEWAY_URL=wss://api.dev.diva-soft.ru/gateway`
-  (the default is `wss://api.diva-ai.ru/gateway`).
+Both the MCP and the SDK target production by default. To work against the dev
+stand, set two variables before starting Claude Code (a dev account and dev key are
+rejected by production):
+
+```
+export DIVA_MCP_URL=https://api.dev.diva-soft.ru/mcp/platform-admin/mcp
+export DIVA_GATEWAY_URL=wss://api.dev.diva-soft.ru/gateway   # for SDK runs
+claude
+```
+
+`/mcp` then signs you in to `dev.diva-soft.ru`.
+
+### Headless / CI (MCP key instead of sign-in)
+
+Where no browser can sign in, add the platform MCP yourself with an MCP key from
+**Developers → MCP** (it carries MCP scope; an SDK key is rejected with `401`):
+
+```
+claude mcp add --transport http diva https://api.diva-ai.ru/mcp/platform-admin/mcp \
+  --header "Authorization: Bearer sk-diva-…"
+```
+
+A server you add this way at the same URL **replaces** the plugin's `platform` server
+(Claude Code keeps one server per URL), and with an `Authorization` header there is no
+sign-in fallback: a wrong key shows as *Failed to connect … HTTP 401*. To go back to
+signing in, `claude mcp remove diva`.
 
 ## What's inside
 
@@ -80,13 +98,13 @@ stand, point both at it — a dev key is rejected by production:
   | `diva-mcp-integrator` | Wires MCP servers into an agent, including the platform/external distinction and each SDK's owns-host and secrets rules. |
   | `diva-sdk-verifier` | Read-only review of Diva SDK code for correctness — traffic-lock, fail-loud vs. silent fallback, snake_case/camelCase, owns-host conflicts — split-aware of Python vs. TypeScript. |
 
-- **MCP** — the `platform` server (`.mcp.json`, at `diva_mcp_url` — default
-  `https://api.diva-ai.ru/mcp/platform-admin/mcp`), authenticated with your
-  `diva_mcp_key`. Its 12 tools let you confirm your identity (`whoami`),
+- **MCP** — the `platform` server (`.mcp.json`, at `DIVA_MCP_URL` — default
+  `https://api.diva-ai.ru/mcp/platform-admin/mcp`), signed in with your Diva account
+  over OAuth. Its tools let you confirm your identity (`whoami`),
   list/get/create/update agents, set an agent's operating mode, inspect
-  sessions & runs, watch usage, and list channels — all scoped to your org by
-  the key (no cross-org access). The **`platform-admin`** skill documents every
-  tool; `/diva-sdk:deploy` and `/diva-sdk:debug-session` drive them.
+  sessions & runs, watch usage, and list channels — all scoped to the org you
+  signed in to (no cross-org access). The **`platform-admin`** skill documents the
+  tools; `/diva-sdk:deploy` and `/diva-sdk:debug-session` drive them.
 
 - **References** (`references/`) — the full SDK API reference (TypeScript & Python,
   English), generated from the live docs pipeline and pinned per version; refresh
