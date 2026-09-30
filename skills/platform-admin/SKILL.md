@@ -126,7 +126,9 @@ For another stand, start Claude Code with `DIVA_MCP_URL` set, e.g.
 
 **Headless / CI** (no browser to sign in): add the server yourself with an MCP key from
 **Developers → MCP** — `claude mcp add --transport http diva <url> --header
-"Authorization: Bearer sk-diva-…"`. An SDK/inference key is rejected there with `401`.
+"Authorization: Bearer sk-diva-…"`. An SDK/inference key is rejected there with `401`. Such a
+server at the same URL replaces the plugin's `platform` server and never falls back to
+sign-in; `claude mcp remove diva` returns to the OAuth path.
 
 **Signing in does not give your code a key.** If you *also* run Diva SDK code in the
 same project, the SDK reads **`DIVA_API_KEY`** from the shell / `.env` (see the

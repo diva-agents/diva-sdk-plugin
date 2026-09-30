@@ -67,6 +67,11 @@ claude mcp add --transport http diva https://api.diva-ai.ru/mcp/platform-admin/m
   --header "Authorization: Bearer sk-diva-…"
 ```
 
+A server you add this way at the same URL **replaces** the plugin's `platform` server
+(Claude Code keeps one server per URL), and with an `Authorization` header there is no
+sign-in fallback: a wrong key shows as *Failed to connect … HTTP 401*. To go back to
+signing in, `claude mcp remove diva`.
+
 ## What's inside
 
 - **Skill** — `skills/diva-sdk/SKILL.md`: the umbrella skill covering the SDK's
