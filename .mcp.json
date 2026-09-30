@@ -2,7 +2,10 @@
   "mcpServers": {
     "platform": {
       "type": "http",
-      "url": "${DIVA_MCP_URL:-https://api.diva-ai.ru/mcp/platform-admin/mcp}"
+      "url": "${DIVA_MCP_URL:-https://api.diva-ai.ru/mcp/platform-admin/mcp}",
+      "oauth": {
+        "scopes": "mcp:read mcp:write"
+      }
     }
   }
 }
