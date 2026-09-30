@@ -8,13 +8,13 @@ Inspect a Diva session/run on the platform using the bundled platform MCP.
 
 ## 1. Preflight
 
-Confirm the platform MCP is reachable — look for `mcp__platform__*` tools
+Confirm the platform MCP is reachable — look for `mcp__plugin_diva-sdk_platform__*` tools
 (`ToolSearch` with `"platform"` if they're deferred). If none are visible, stop
 and tell the user to connect it first: run `/mcp`, pick `plugin:diva-sdk:platform` → **Authenticate**, sign in to Diva in the browser and press **Allow**.
 
 ## 2. Discover the real tools — do not assume names
 
-List the available `mcp__platform__*` tools and read their descriptions to find
+List the available `mcp__plugin_diva-sdk_platform__*` tools and read their descriptions to find
 the ones for sessions, runs, agents, and usage. Use exactly what's there.
 
 ## 3. Fetch

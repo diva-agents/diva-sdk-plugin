@@ -7,7 +7,7 @@ description: Use when managing or inspecting your own Diva-platform resources �
 
 The plugin bundles the **`platform`** MCP server (the `platform` entry in
 `.mcp.json`, served at path `/mcp/platform-admin`; its tools appear as
-`mcp__platform__*`) — 12 read/write tools to operate the agents you build with the
+`mcp__plugin_diva-sdk_platform__*`) — read/write tools to operate the agents you build with the
 SDK: list/create/
 configure agents, inspect their sessions and runs, watch token spend, and see
 which channels are bound. It is called **directly by you** (or your tooling — Claude
@@ -133,14 +133,13 @@ same project, the SDK reads **`DIVA_API_KEY`** from the shell / `.env` (see the
 `diva-sdk` skill) — issue it on **Developers → API** (`/ux/api-keys`). Without it the
 MCP tools work while your SDK `run()` fails with `DivaAuthError`.
 
-## Scope — what this surface does NOT include
+## Scope — the live tool list wins
 
-The shipped v1 surface is exactly the 12 tools above. Do not assume more:
-
-- **No knowledge-base tools** and **no CRM tools** — not in this MCP.
-- **No channel-connect / disconnect tool.** `list_channels` is **read-only**; binding
-  or connecting a channel is done elsewhere (CRM UI), not here.
-- Writes are only `create_agent`, `update_agent`, `set_operating_mode`. Everything
-  else (`list_*`, `get_*`, `whoami`) is a safe read.
+This skill details the core tools above. The server has grown past them (knowledge
+base, channel binding, integrations, cron jobs, skills, voice and more — ~70 tools on
+the current platform), so **list the `platform` tools you actually have and read
+their descriptions** rather than assuming a tool is missing. Tools that change your
+organization are refused with *"granted read-only access"* if the sign-in did not
+grant write access — reconnect via `/mcp` and approve both rights.
 
 Full SDK reference: https://diva-ai.ru/ux/sdk-docs

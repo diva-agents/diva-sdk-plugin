@@ -67,5 +67,5 @@ External servers run with the privileges of the process that launches them
 6. For the **platform MCP** use case specifically: don't write `MCP.*` code at
    all. Instead point the user at `/diva-sdk:deploy` (register/update an agent) or
    `/diva-sdk:debug-session` (inspect sessions/runs) — both drive the
-   `mcp__platform__*` tools directly, discovering the real tool names rather
+   `mcp__plugin_diva-sdk_platform__*` tools directly, discovering the real tool names rather
    than assuming them.
