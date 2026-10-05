@@ -164,15 +164,18 @@ only that agent's chats; another org's `conversation_id` answers "not found".
 - **`reset_funnel(conversation_id, scope, frame=None)`** — release ONE chat:
   - `scope="escalation"` — the failure/stall counters go to zero, the slots the
     customer already filled **stay**; a chat the agent handed to an operator is
-    returned to the bot (with context). A chat a person has taken (assigned
-    operator) keeps the operator.
+    returned to the bot (with context) — unless a person has taken it or wrote to
+    the customer within the last hour: then it keeps its operator.
   - `scope="frame"` — one frame starts over (its slots and counters); other frames
     and the escalation are untouched. `frame` = `frames[].key` from
     `get_funnel_state`; required when the funnel has several frames.
 - **`reset_stuck_conversations(dry_run=True, agent=None)`** — release the escalation
-  of EVERY stuck chat of the org (always `scope="escalation"`; operator-held chats
-  keep their operator). Call with `dry_run=True` first — it lists what would be
-  reset — then `dry_run=False`.
+  of EVERY stuck chat of the org (always `scope="escalation"`). Call with
+  `dry_run=True` first — it lists what would be reset — then `dry_run=False`, which
+  needs an owner/admin (a member signed in by OAuth is refused; an org API key may).
+  Chats a person is handling — taken by an operator, or where a person wrote to the
+  customer within the last hour — are never touched and come back under `skipped`
+  with the reason (`operator_assigned` / `operator_active`).
 
 The engine applies a reset at the start of the chat's next turn, so the agent's very
 next answer already runs on the released state. Every reset shows up in the
