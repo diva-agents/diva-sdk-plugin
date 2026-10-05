@@ -172,7 +172,9 @@ only that agent's chats; another org's `conversation_id` answers "not found".
 - **`reset_stuck_conversations(dry_run=True, agent=None)`** — release the escalation
   of EVERY stuck chat of the org (always `scope="escalation"`). Call with
   `dry_run=True` first — it lists what would be reset — then `dry_run=False`, which
-  needs an owner/admin (a member signed in by OAuth is refused; an org API key may).
+  needs an owner/admin: an OAuth sign-in acts as that person, an org MCP key as the
+  person who issued it, with their role today (a key issued before 05.10.2026 has no
+  recorded issuer and is refused — issue a new one as an owner/admin).
   Chats a person is handling — taken by an operator, or where a person wrote to the
   customer within the last hour — are never touched and come back under `skipped`
   with the reason (`operator_assigned` / `operator_active`).
