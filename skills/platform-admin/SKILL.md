@@ -142,6 +142,45 @@ have nothing to read or set. If you plan to observe or flow-drive an agent, keep
   `"sip"`, `"vk_teams"`, `"whatsapp"`, `"wazzap"`, `"bitrix"`. WHEN: see what's wired
   and whether it's running.
 
+## Stuck chats — funnel state and resets
+
+A chat "stuck in the funnel" is one whose frame latched its fail-exit (the final
+action, e.g. `create_order`, failed `after_fails` times and is now refused) or that
+the agent escalated to an operator. These four tools find it, say why, and let it
+go — without a developer. The org comes from the key; a key bound to one agent sees
+only that agent's chats; another org's `conversation_id` answers "not found".
+
+- **`list_stuck_conversations(agent=None, limit=50)`** — chats of the org whose
+  funnel is latched or escalated (agents with an active funnel, chats active in the
+  last 7 days; `limit` 1–500). Each item is a `get_funnel_state` object. WHEN: "which
+  chats are stuck right now?"
+- **`get_funnel_state(conversation_id)`** — `stuck` + `reasons`
+  (`escalated_to_operator`, `frame_latched:<key>`), `escalated`, `handler_mode`,
+  `operator_assigned`, `active_frame_key`, and per frame: `key`, `fail_count`,
+  `stall_turns`, `escalate_blocks`, `latched`, `latched_at`, `missing` (required slots
+  still empty). `pending_reset` — a reset waiting for the chat's next message;
+  `updated_at` — when the engine last reported the chat. WHEN: "why does this chat
+  refuse to place the order?"
+- **`reset_funnel(conversation_id, scope, frame=None)`** — release ONE chat:
+  - `scope="escalation"` — the failure/stall counters go to zero, the slots the
+    customer already filled **stay**; a chat the agent handed to an operator is
+    returned to the bot (with context) — unless a person has taken it or wrote to
+    the customer within the last hour: then it keeps its operator.
+  - `scope="frame"` — one frame starts over (its slots and counters); other frames
+    and the escalation are untouched. `frame` = `frames[].key` from
+    `get_funnel_state`; required when the funnel has several frames.
+- **`reset_stuck_conversations(dry_run=True, agent=None)`** — release the escalation
+  of EVERY stuck chat of the org (always `scope="escalation"`). Call with
+  `dry_run=True` first — it lists what would be reset — then `dry_run=False`, which
+  needs an owner/admin (a member signed in by OAuth is refused; an org API key may).
+  Chats a person is handling — taken by an operator, or where a person wrote to the
+  customer within the last hour — are never touched and come back under `skipped`
+  with the reason (`operator_assigned` / `operator_active`).
+
+The engine applies a reset at the start of the chat's next turn, so the agent's very
+next answer already runs on the released state. Every reset shows up in the
+platform's «Логи» feed as «Сброс воронки» (who, scope, frames, bulk or not).
+
 ## Footgun — deployment-conditional failures
 
 The observability tools depend on how the target deployment is provisioned. These
