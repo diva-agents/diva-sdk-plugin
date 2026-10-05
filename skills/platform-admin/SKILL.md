@@ -74,8 +74,24 @@ have nothing to read or set. If you plan to observe or flow-drive an agent, keep
 - **`list_sessions(agent_id, limit=20, offset=0, channel=None)`** — an agent's
   conversation sessions, newest first (`limit` 1–200). `channel` filters e.g.
   `"telegram"`, `"webchat"`. WHEN: find session ids for a transcript.
-- **`get_session(agent_id, session_id, limit=100)`** — normalized message transcript
-  (`limit` 1–500 trailing messages). WHEN: read what was actually said in a session.
+- **`get_session(agent_id, session_id, limit=100, offset=None, include_dialog_log=True)`**
+  — the FULL conversation, page by page. Without `offset` you get the newest
+  `limit` (1–500) messages; pass `offset=0`, then `next_offset`, to read it from the
+  start. `session_id` may be a session id or a session key. Each message carries
+  `source`: `"transcript"` (engine transcript, with tool calls) or `"dialog_log"` —
+  the chat's earlier messages kept by Diva, e.g. a Telegram chat whose engine
+  transcript restarted after `/new` or a session reset. `coverage.unavailable` lists
+  every part that cannot be read and why (tool calls before the restart, encrypted
+  rows without a decrypt key, the read cap) — nothing is dropped silently.
+  WHEN: read what was actually said in a session.
+- **`search_sessions(agent_id=None, tool=None, status=None, escalated=None, kind=None,
+  channel=None, date_from=None, date_to=None, days=7, limit=50, offset=0)`** — sessions
+  where something happened, as ONE list: e.g. `tool="create_order", status="error",
+  days=7` (every failed order this week) or `escalated=True` (every hand-off to an
+  operator). One row per session: `session_key`, matched events, errors, `escalated`,
+  the latest matching event, `conversation_id`. Searches the activity log, so only its
+  retention (`retention_days`, 30 by default) is searchable. WHEN: find the sessions to
+  open with `get_session` instead of opening them one by one.
 - **`list_runs(agent_id, session_key=None, limit=20, offset=0)`** — runs (one run =
   one agent turn/loop) for a session; `session_key` defaults to the agent's main
   session (`agent:<slug>:main`). WHEN: enumerate turns to drill into. **Backed by
@@ -85,6 +101,38 @@ have nothing to read or set. If you plan to observe or flow-drive an agent, keep
 - **`get_usage(days=30, agent_id=None)`** — token usage + cost, aggregated from the
   billing worker (`days` 1–365). Omit `agent_id` for the whole org; pass it to scope
   to one agent. WHEN: watch spend across the org or per agent.
+
+## Scenario (the funnel JSON)
+
+- **`get_scenario(agent_id)`** — the agent's scenario as one JSON, in the exact
+  shape `set_scenario` accepts (`{"frame": {…}}` for one funnel, `{"frames": […]}`
+  for several intents), plus what the ENGINE actually has: `engine.loaded`,
+  `engine.scenario`, `config_version`, `published_at` and `in_sync`. When the engine
+  does not see it, `engine.reason` says why — `agent_not_in_pipeline_mode` (a funnel
+  runs only in `pipeline`, see `set_operating_mode`), `no_active_scenario`,
+  `not_published_yet`. WHEN: check what is really loaded before and after a change.
+- **`set_scenario(agent_id, scenario_json, dry_run=False)`** — load `scenario.json`
+  from your repository. `dry_run=True` only validates and lists EVERY error
+  (`errors: [{path, message}]` — grammar, duplicate frame keys, a tool the agent does
+  not have, a required slot nothing can fill); nothing is saved. Without `dry_run` an
+  invalid scenario is still never saved; a valid one replaces the agent's active
+  scenario (one is created and activated if there is none) and the response carries
+  `state` = `get_scenario` after the save. A scenario defined in SDK code is
+  read-only here. WHEN: ship the funnel from CI — `dry_run=True` in the PR check,
+  then the real call on deploy.
+
+## Integrations — refresh after you redeploy
+
+- **`refresh_integration(integration, force=False)`** — after you deploy your MCP
+  server with new or changed tools/arguments, call this instead of re-saving the
+  integration in the dashboard: the engine caches each server's tool list and would
+  otherwise keep the old arguments. For your own MCP connection it runs a real
+  `initialize` + `tools/list`, returns the tools with their arguments and what was
+  `added` / `removed` / `changed_tools`, and the agent sees the new schema from its
+  next message. `integration` is the connection id from `list_org_integrations` or its
+  exact name. `force=True` makes the engine re-read even an unchanged schema (e.g. it
+  listed the tools while your server was down). Shared catalog integrations (Composio,
+  built-ins) are managed by the platform and are refused without changes.
 
 ## Channels
 
